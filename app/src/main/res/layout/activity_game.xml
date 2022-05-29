@@ -6,15 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".GameActivity">
 
-    <include layout="@layout/activity_game_header"
-        android:id="@+id/header"/>
+    <include
+        android:id="@+id/header"
+        layout="@layout/activity_game_header" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World"
-        app:layout_constraintTop_toBottomOf="@+id/header"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header" />
+
+    <include
+        android:id="@+id/footer"
+        layout="@layout/activity_game_footer" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
