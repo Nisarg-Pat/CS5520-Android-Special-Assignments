@@ -11,7 +11,8 @@
         android:theme="@style/Theme.NUMAD22Su_NisargPatel">
         <activity
             android:name=".GameActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.NUMAD22Su_NisargPatel_NoActionBar"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">
