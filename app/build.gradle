@@ -17,8 +17,8 @@ android {
         applicationId "com.cs5520.assignments.numad22su_nisargpatel"
         minSdk 26
         targetSdk 32
-        versionCode 1
-        versionName "1.0"
+        versionCode 102
+        versionName "1.02"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
