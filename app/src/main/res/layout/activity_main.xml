@@ -27,4 +27,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <Button
+        android:id="@+id/adcap_clone_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AdCap Clone"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/about_me_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
