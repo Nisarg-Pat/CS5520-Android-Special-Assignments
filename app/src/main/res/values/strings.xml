@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">NUMAD22Su_NisargPatel</string>
     <string name="about_me">About Me</string>
+
+    <string name="upgrade_buy_x1">Buy x1</string>
+    <string name="upgrade_buy_x10">Buy x10</string>
+    <string name="upgrade_buy_x100">Buy x100</string>
+    <string name="upgrade_buy_next">Buy Next</string>
 </resources>
