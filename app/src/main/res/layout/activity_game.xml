@@ -24,6 +24,7 @@
         android:id="@+id/right_button_list"
         android:layout_width="50dp"
         android:layout_height="@dimen/fit_constraint"
+        android:background="@color/white"
         app:layout_constraintTop_toBottomOf="@+id/header"
         app:layout_constraintBottom_toTopOf="@+id/footer"
         app:layout_constraintEnd_toEndOf="parent">
