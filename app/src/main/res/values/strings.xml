@@ -6,4 +6,5 @@
     <string name="upgrade_buy_x10">Buy x10</string>
     <string name="upgrade_buy_x100">Buy x100</string>
     <string name="upgrade_buy_next">Buy Next</string>
+    <string name="buy">Buy</string>
 </resources>

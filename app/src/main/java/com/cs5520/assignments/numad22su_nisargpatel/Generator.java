@@ -10,6 +10,8 @@ public class Generator {
     private int currentOwned;
     private double multiplier;
 
+    private static final int MAX_ALLOWED = 1000;
+
     public Generator(String name, double initialPrice, double coefficient, double initialTime, double initialRevenue, double initialProductivity) {
         this.name = name;
         this.initialPrice = initialPrice;
@@ -51,18 +53,33 @@ public class Generator {
     }
 
     public int getNextBonusCount() {
-        return ((currentOwned) / 100 + 1) * 100;
+        return Math.min(MAX_ALLOWED, ((currentOwned) / 100 + 1) * 100);
     }
 
     public double getProduction() {
         return initialProductivity * currentOwned * multiplier;
     }
 
-    public double getCost() {
-        return initialPrice * Math.pow(coefficient, currentOwned + 1);
+    public double getCost(BuyType buyType) {
+        if (currentOwned == MAX_ALLOWED) {
+            return 0.0;
+        }
+        int count = getBuyCount(buyType);
+        return initialPrice * Math.pow(coefficient, currentOwned) * ((Math.pow(coefficient, count) - 1) / (coefficient - 1));
     }
 
-    public void buy() {
-        currentOwned++;
+    public void buy(BuyType buyType) {
+        currentOwned = Math.min(MAX_ALLOWED, currentOwned + getBuyCount(buyType));
+    }
+
+    public int getBuyCount(BuyType buyType) {
+        if(currentOwned == MAX_ALLOWED) {
+            return 0;
+        }
+        if (buyType == BuyType.BUY_NEXT) {
+            return getNextBonusCount() - getCurrentOwned();
+        } else {
+            return buyType.getCount();
+        }
     }
 }

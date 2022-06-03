@@ -16,6 +16,8 @@ public class GameActivity extends AppCompatActivity {
 
     Button upgradeBuy;
     RecyclerView generatorRecyclerView;
+    GeneratorAdapter generatorAdapter;
+    BuyType buyType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,8 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         upgradeBuy = findViewById(R.id.upgrade_button);
+        buyType = BuyType.BUY_1x;
+        upgradeBuy.setText(getBuyTypeString());
         upgradeBuy.setOnClickListener((v) -> changeUpgradeBuy());
 
         generatorRecyclerView = findViewById(R.id.generator_rv);
@@ -34,20 +38,37 @@ public class GameActivity extends AppCompatActivity {
         generatorRecyclerView.setHasFixedSize(true);
         generatorRecyclerView.setItemAnimator(null);
         generatorRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        generatorRecyclerView.setAdapter(new GeneratorAdapter(getGeneratorList(), this));
+        generatorAdapter = new GeneratorAdapter(getGeneratorList(), this, buyType);
+        generatorRecyclerView.setAdapter(generatorAdapter);
+    }
+
+    private String getBuyTypeString() {
+        switch (buyType) {
+            case BUY_10x:
+                return getString(R.string.upgrade_buy_x10);
+            case BUY_100x:
+                return getString(R.string.upgrade_buy_x100);
+            case BUY_NEXT:
+                return getString(R.string.upgrade_buy_next);
+            case BUY_1x:
+            default:
+                return getString(R.string.upgrade_buy_x1);
+        }
     }
 
     private void changeUpgradeBuy() {
         String s = upgradeBuy.getText().toString();
-        if (s.equals(getString(R.string.upgrade_buy_x1))) {
-            upgradeBuy.setText(R.string.upgrade_buy_x10);
-        } else if (s.equals(getString(R.string.upgrade_buy_x10))) {
-            upgradeBuy.setText(R.string.upgrade_buy_x100);
-        } else if (s.equals(getString(R.string.upgrade_buy_x100))) {
-            upgradeBuy.setText(R.string.upgrade_buy_next);
+        if (buyType == BuyType.BUY_1x) {
+            buyType = BuyType.BUY_10x;
+        } else if (buyType == BuyType.BUY_10x) {
+            buyType = BuyType.BUY_100x;
+        } else if (buyType == BuyType.BUY_100x) {
+            buyType = BuyType.BUY_NEXT;
         } else {
-            upgradeBuy.setText(R.string.upgrade_buy_x1);
+            buyType = BuyType.BUY_1x;
         }
+        upgradeBuy.setText(getBuyTypeString());
+        generatorAdapter.updateBuyType(buyType);
     }
 
     private List<Generator> getGeneratorList() {

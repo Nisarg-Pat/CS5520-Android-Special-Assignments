@@ -36,43 +36,43 @@
                 android:layout_marginTop="@dimen/margin_mid"
                 android:layout_marginEnd="@dimen/margin_mid"
                 android:layout_marginStart="@dimen/margin_mid"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="@dimen/right_button_dimen"
+                android:layout_height="@dimen/right_button_dimen"
                 android:src="@drawable/stop"/>
             <ImageView
                 android:layout_marginTop="@dimen/margin_mid"
                 android:layout_marginEnd="@dimen/margin_mid"
                 android:layout_marginStart="@dimen/margin_mid"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="@dimen/right_button_dimen"
+                android:layout_height="@dimen/right_button_dimen"
                 android:src="@drawable/stop"/>
             <ImageView
                 android:layout_marginTop="@dimen/margin_mid"
                 android:layout_marginEnd="@dimen/margin_mid"
                 android:layout_marginStart="@dimen/margin_mid"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="@dimen/right_button_dimen"
+                android:layout_height="@dimen/right_button_dimen"
                 android:src="@drawable/stop"/>
             <ImageView
                 android:layout_marginTop="@dimen/margin_mid"
                 android:layout_marginEnd="@dimen/margin_mid"
                 android:layout_marginStart="@dimen/margin_mid"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="@dimen/right_button_dimen"
+                android:layout_height="@dimen/right_button_dimen"
                 android:src="@drawable/stop"/>
             <ImageView
                 android:layout_marginTop="@dimen/margin_mid"
                 android:layout_marginEnd="@dimen/margin_mid"
                 android:layout_marginStart="@dimen/margin_mid"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="@dimen/right_button_dimen"
+                android:layout_height="@dimen/right_button_dimen"
                 android:src="@drawable/stop"/>
             <ImageView
                 android:layout_marginTop="@dimen/margin_mid"
                 android:layout_marginEnd="@dimen/margin_mid"
                 android:layout_marginStart="@dimen/margin_mid"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="@dimen/right_button_dimen"
+                android:layout_height="@dimen/right_button_dimen"
                 android:src="@drawable/stop"/>
         </LinearLayout>
     </ScrollView>

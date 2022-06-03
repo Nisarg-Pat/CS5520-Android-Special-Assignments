@@ -14,8 +14,9 @@ import java.util.List;
 
 public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.GeneratorViewHolder> {
 
-    List<Generator> generatorList;
-    Context context;
+    private List<Generator> generatorList;
+    private BuyType buyType;
+    private Context context;
 
     public static class GeneratorViewHolder extends RecyclerView.ViewHolder {
 
@@ -35,19 +36,12 @@ public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.Gene
             timeTV = itemView.findViewById(R.id.generator_item_time_tv);
             buyView = itemView.findViewById(R.id.generator_item_buy_view);
         }
-
-        public void bindData(Generator generator) {
-            countTV.setText(String.format("%d/%d", generator.getCurrentOwned(), generator.getNextBonusCount()));
-            earningTV.setText(String.format("%.2f per sec", generator.getProduction()));
-            buyTV.setText(String.format("Buy %d", generator.getNextBonusCount()-generator.getCurrentOwned()));
-            costTV.setText(String.format("%.2f", generator.getCost()));
-            timeTV.setText(String.format("%.0f", generator.getInitialTime()));
-        }
     }
 
-    public GeneratorAdapter(List<Generator> generatorList, Context context) {
+    public GeneratorAdapter(List<Generator> generatorList, Context context, BuyType buyType) {
         this.generatorList = generatorList;
         this.context = context;
+        this.buyType = buyType;
     }
 
     @NonNull
@@ -60,8 +54,14 @@ public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.Gene
 
     @Override
     public void onBindViewHolder(@NonNull GeneratorViewHolder holder, int position) {
-        holder.bindData(generatorList.get(position));
+        Generator generator = generatorList.get(position);
+        holder.countTV.setText(String.format("%d/%d", generator.getCurrentOwned(), generator.getNextBonusCount()));
+        holder.earningTV.setText(String.format("%.2f per sec", generator.getProduction()));
+        holder.buyTV.setText(String.format("Buy %d", generator.getBuyCount(buyType)));
+        holder.costTV.setText(String.format("%.2f", generator.getCost(buyType)));
+        holder.timeTV.setText(String.format("%.0f", generator.getInitialTime()));
     }
+
 
     @Override
     public int getItemCount() {
@@ -69,7 +69,14 @@ public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.Gene
     }
 
     public void clickBuyView(int position) {
-        generatorList.get(position).buy();
+        generatorList.get(position).buy(buyType);
         notifyItemChanged(position);
     }
+
+    public void updateBuyType(BuyType newBuyType) {
+        this.buyType = newBuyType;
+        notifyItemRangeChanged(0, getItemCount());
+    }
+    
+
 }
