@@ -1,31 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="100dp">
 
-    <TextView
-        android:id="@+id/generator_item_name_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Random Text"
-        android:textSize="20sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        />
-
-    <TextView
-        android:id="@+id/generator_item_initPrice_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+    <ImageView
+        android:id="@+id/generator_item_icon"
+        android:layout_width="84dp"
+        android:layout_height="84dp"
         android:layout_marginStart="8dp"
-        android:text="Random Text"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/stop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/generator_item_count"
+        android:layout_width="84dp"
+        android:layout_height="wrap_content"
+        android:background="#FF0000"
+        android:gravity="center_horizontal"
+        android:text="100/200"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/generator_item_icon"
+        app:layout_constraintStart_toStartOf="@id/generator_item_icon" />
+
+    <TextView
+        android:id="@+id/generator_item_earnings_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="#00FF00"
+        android:gravity="center_horizontal"
+        android:text="44.793 octillion /sec"
         android:textSize="20sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/generator_item_name_tv"
-        />
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/generator_item_icon"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/generator_item_time_tv"-->
+    <!--        android:layout_width="60dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="8dp"-->
+    <!--        android:layout_marginStart="8dp"-->
+    <!--        android:layout_marginEnd="8dp"-->
+    <!--        android:text="100s"-->
+    <!--        android:textSize="20sp"-->
+    <!--        android:background="#00FF00"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/generator_item_earnings_tv"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        />-->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/generator_item_buy_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/black_border"
+        android:padding="8dp"
+        app:layout_constraintEnd_toStartOf="@id/generator_item_time_tv"
+        app:layout_constraintStart_toEndOf="@id/generator_item_icon"
+        app:layout_constraintTop_toBottomOf="@id/generator_item_earnings_tv">
+
+        <TextView
+            android:id="@+id/generator_item_buy_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Buy 100"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/generator_item_cost_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="Cost"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="@color/black"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/generator_item_time_tv"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:padding="8dp"
+        android:background="#00FF00"
+        android:gravity="center_horizontal"
+        android:textColor="@color/black"
+        android:text="100s"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/generator_item_buy_view"
+        app:layout_constraintTop_toBottomOf="@id/generator_item_earnings_tv" />
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/generator_item_name_tv"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="8dp"-->
+    <!--        android:layout_marginStart="8dp"-->
+    <!--        android:layout_marginEnd="8dp"-->
+    <!--        android:text="Random Text"-->
+    <!--        android:gravity="center_horizontal"-->
+    <!--        android:textSize="20sp"-->
+    <!--        android:background="#00FF00"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:layout_constraintStart_toEndOf="@id/generator_item_icon"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/generator_item_initPrice_tv"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="8dp"-->
+    <!--        android:layout_marginStart="8dp"-->
+    <!--        android:text="Random Text"-->
+    <!--        android:textSize="20sp"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:layout_constraintStart_toEndOf="@+id/generator_item_name_tv"-->
+    <!--        />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

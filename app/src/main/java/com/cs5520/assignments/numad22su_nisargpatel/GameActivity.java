@@ -51,8 +51,11 @@ public class GameActivity extends AppCompatActivity {
 
     private List<Generator> getGeneratorList() {
         List<Generator> generatorList = new ArrayList<>();
-        generatorList.add(new Generator("Lemon", 1.4));
-        generatorList.add(new Generator("Newspaper", 60.0));
+        generatorList.add(new Generator("Lemonade Stand", 3.738, 1.07, 0.6, 1, 1.67));
+        generatorList.add(new Generator("Newspaper Delivery", 60, 1.15, 3, 60, 20));
+        generatorList.add(new Generator("Car Wash", 720, 1.14, 6, 540, 90));
+        generatorList.add(new Generator("Pizza Delivery", 8640, 1.13, 12, 4320, 360));
+        generatorList.add(new Generator("Donut Stop", 103680, 1.12, 24, 51840, 2160));
         return generatorList;
     }
 }
