@@ -10,14 +10,13 @@
         android:id="@+id/header"
         layout="@layout/activity_game_header" />
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/generator_rv"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="Space for recyclerView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header"
         app:layout_constraintBottom_toTopOf="@id/footer"
-        android:background="#888888"
         app:layout_constraintEnd_toStartOf="@id/right_button_list"/>
 
     <ScrollView

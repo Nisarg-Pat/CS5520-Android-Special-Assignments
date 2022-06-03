@@ -1,15 +1,21 @@
 package com.cs5520.assignments.numad22su_nisargpatel;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameActivity extends AppCompatActivity {
 
     Button upgradeBuy;
+    RecyclerView generatorRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +28,12 @@ public class GameActivity extends AppCompatActivity {
 
         upgradeBuy = findViewById(R.id.upgrade_button);
         upgradeBuy.setOnClickListener((v) -> changeUpgradeBuy());
+
+        generatorRecyclerView = findViewById(R.id.generator_rv);
+
+        generatorRecyclerView.setHasFixedSize(true);
+        generatorRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        generatorRecyclerView.setAdapter(new GeneratorAdapter(getGeneratorList(), this));
     }
 
     private void changeUpgradeBuy() {
@@ -35,5 +47,12 @@ public class GameActivity extends AppCompatActivity {
         } else {
             upgradeBuy.setText(R.string.upgrade_buy_x1);
         }
+    }
+
+    private List<Generator> getGeneratorList() {
+        List<Generator> generatorList = new ArrayList<>();
+        generatorList.add(new Generator("Lemon", 1.4));
+        generatorList.add(new Generator("Newspaper", 60.0));
+        return generatorList;
     }
 }
