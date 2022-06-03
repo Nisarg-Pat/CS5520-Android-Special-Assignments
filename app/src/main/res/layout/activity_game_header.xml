@@ -4,8 +4,8 @@
     android:layout_height="wrap_content"
     android:background="#964B00"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingBottom="8dp"
-    android:paddingTop="8dp"
+    android:paddingBottom="@dimen/padding_mid"
+    android:paddingTop="@dimen/padding_mid"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent">
@@ -16,7 +16,7 @@
         android:layout_height="100dp"
         android:src="@drawable/spike"
         android:scaleType="fitCenter"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="@dimen/margin_mid"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:contentDescription="Player button" />
@@ -25,8 +25,8 @@
         android:id="@+id/score_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="@dimen/margin_mid"
+        android:layout_marginTop="@dimen/margin_mid"
         android:textSize="24sp"
         android:textColor="@color/white"
         android:text="$ 5.128 Trillion"
@@ -37,7 +37,7 @@
         android:id="@+id/upgrade_button"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="@dimen/margin_mid"
         android:text="@string/upgrade_buy_x1"
         android:textSize="12sp"
         android:backgroundTint="#FFA500"
@@ -56,31 +56,31 @@
             android:layout_height="24dp"
             android:src="@drawable/gold_bar" />
         <TextView
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/margin_mid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="10"/>
 
         <ImageView
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="@dimen/margin_xl"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/mega_bucks" />
         <TextView
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/margin_mid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="10"/>
 
         <ImageView
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="@dimen/margin_xl"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/mega_ticket" />
         <TextView
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/margin_mid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

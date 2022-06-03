@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text="Hello World!"
         android:textSize="20sp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/margin_lg"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/about_me"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/margin_lg"
         app:layout_constraintTop_toBottomOf="@id/hello_world_tv"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="AdCap Clone"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/margin_lg"
         app:layout_constraintTop_toBottomOf="@id/about_me_btn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

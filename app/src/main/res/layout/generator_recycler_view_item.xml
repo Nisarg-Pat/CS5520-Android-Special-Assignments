@@ -8,8 +8,8 @@
         android:id="@+id/generator_item_icon"
         android:layout_width="84dp"
         android:layout_height="84dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="@dimen/margin_mid"
+        android:layout_marginTop="@dimen/margin_mid"
         android:src="@drawable/stop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,11 +27,11 @@
 
     <TextView
         android:id="@+id/generator_item_earnings_tv"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/fit_constraint"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="@dimen/margin_mid"
+        android:layout_marginTop="@dimen/margin_mid"
+        android:layout_marginEnd="@dimen/margin_mid"
         android:background="#00FF00"
         android:gravity="center_horizontal"
         android:text="44.793 octillion /sec"
@@ -41,28 +41,14 @@
         app:layout_constraintStart_toEndOf="@id/generator_item_icon"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!--    <TextView-->
-    <!--        android:id="@+id/generator_item_time_tv"-->
-    <!--        android:layout_width="60dp"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="8dp"-->
-    <!--        android:layout_marginStart="8dp"-->
-    <!--        android:layout_marginEnd="8dp"-->
-    <!--        android:text="100s"-->
-    <!--        android:textSize="20sp"-->
-    <!--        android:background="#00FF00"-->
-    <!--        app:layout_constraintTop_toBottomOf="@id/generator_item_earnings_tv"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        />-->
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/generator_item_buy_view"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/fit_constraint"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="@dimen/margin_mid"
+        android:layout_marginTop="@dimen/margin_mid"
         android:background="@drawable/black_border"
-        android:padding="8dp"
+        android:padding="@dimen/padding_mid"
         android:clickable="true"
         app:layout_constraintEnd_toStartOf="@id/generator_item_time_tv"
         app:layout_constraintStart_toEndOf="@id/generator_item_icon"
@@ -72,7 +58,7 @@
             android:id="@+id/generator_item_buy_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/margin_mid"
             android:text="Buy 100"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -82,7 +68,7 @@
             android:id="@+id/generator_item_cost_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="@dimen/margin_mid"
             android:text="Cost"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -93,10 +79,10 @@
         android:id="@+id/generator_item_time_tv"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:padding="8dp"
+        android:layout_marginStart="@dimen/margin_mid"
+        android:layout_marginTop="@dimen/margin_mid"
+        android:layout_marginEnd="@dimen/margin_mid"
+        android:padding="@dimen/padding_mid"
         android:background="#00FF00"
         android:gravity="center_horizontal"
         android:textColor="@color/black"
@@ -104,34 +90,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/generator_item_buy_view"
         app:layout_constraintTop_toBottomOf="@id/generator_item_earnings_tv" />
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/generator_item_name_tv"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="8dp"-->
-    <!--        android:layout_marginStart="8dp"-->
-    <!--        android:layout_marginEnd="8dp"-->
-    <!--        android:text="Random Text"-->
-    <!--        android:gravity="center_horizontal"-->
-    <!--        android:textSize="20sp"-->
-    <!--        android:background="#00FF00"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        app:layout_constraintStart_toEndOf="@id/generator_item_icon"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        />-->
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/generator_item_initPrice_tv"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="8dp"-->
-    <!--        android:layout_marginStart="8dp"-->
-    <!--        android:text="Random Text"-->
-    <!--        android:textSize="20sp"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        app:layout_constraintStart_toEndOf="@+id/generator_item_name_tv"-->
-    <!--        />-->
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

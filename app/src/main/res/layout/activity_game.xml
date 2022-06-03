@@ -12,8 +12,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/generator_rv"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="@dimen/fit_constraint"
+        android:layout_height="@dimen/fit_constraint"
         android:background="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header"
@@ -22,8 +22,8 @@
 
     <ScrollView
         android:id="@+id/right_button_list"
-        android:layout_width="100dp"
-        android:layout_height="0dp"
+        android:layout_width="50dp"
+        android:layout_height="@dimen/fit_constraint"
         app:layout_constraintTop_toBottomOf="@+id/header"
         app:layout_constraintBottom_toTopOf="@+id/footer"
         app:layout_constraintEnd_toEndOf="parent">
@@ -32,46 +32,46 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <ImageView
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_width="86dp"
-                android:layout_height="86dp"
+                android:layout_marginTop="@dimen/margin_mid"
+                android:layout_marginEnd="@dimen/margin_mid"
+                android:layout_marginStart="@dimen/margin_mid"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:src="@drawable/stop"/>
             <ImageView
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_width="86dp"
-                android:layout_height="86dp"
+                android:layout_marginTop="@dimen/margin_mid"
+                android:layout_marginEnd="@dimen/margin_mid"
+                android:layout_marginStart="@dimen/margin_mid"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:src="@drawable/stop"/>
             <ImageView
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_width="86dp"
-                android:layout_height="86dp"
+                android:layout_marginTop="@dimen/margin_mid"
+                android:layout_marginEnd="@dimen/margin_mid"
+                android:layout_marginStart="@dimen/margin_mid"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:src="@drawable/stop"/>
             <ImageView
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_width="86dp"
-                android:layout_height="86dp"
+                android:layout_marginTop="@dimen/margin_mid"
+                android:layout_marginEnd="@dimen/margin_mid"
+                android:layout_marginStart="@dimen/margin_mid"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:src="@drawable/stop"/>
             <ImageView
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_width="86dp"
-                android:layout_height="86dp"
+                android:layout_marginTop="@dimen/margin_mid"
+                android:layout_marginEnd="@dimen/margin_mid"
+                android:layout_marginStart="@dimen/margin_mid"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:src="@drawable/stop"/>
             <ImageView
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_width="86dp"
-                android:layout_height="86dp"
+                android:layout_marginTop="@dimen/margin_mid"
+                android:layout_marginEnd="@dimen/margin_mid"
+                android:layout_marginStart="@dimen/margin_mid"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:src="@drawable/stop"/>
         </LinearLayout>
     </ScrollView>
