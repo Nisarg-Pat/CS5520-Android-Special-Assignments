@@ -63,6 +63,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/black_border"
         android:padding="8dp"
+        android:clickable="true"
         app:layout_constraintEnd_toStartOf="@id/generator_item_time_tv"
         app:layout_constraintStart_toEndOf="@id/generator_item_icon"
         app:layout_constraintTop_toBottomOf="@id/generator_item_earnings_tv">

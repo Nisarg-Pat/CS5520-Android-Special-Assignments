@@ -27,7 +27,7 @@ public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull GeneratorViewHolder holder, int position) {
-        holder.bindData(generatorList.get(position));
+        holder.bindData(generatorList.get(position), this);
     }
 
     @Override

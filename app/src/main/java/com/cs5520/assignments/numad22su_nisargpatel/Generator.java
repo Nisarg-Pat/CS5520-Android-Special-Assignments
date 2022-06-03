@@ -54,7 +54,7 @@ public class Generator {
         if (this.currentOwned == 0) {
             return 100;
         }
-        return ((currentOwned - 1) / 100) * 100;
+        return ((currentOwned - 1) / 100 + 1) * 100;
     }
 
     public double getProduction() {
@@ -63,5 +63,9 @@ public class Generator {
 
     public double getCost() {
         return initialPrice * Math.pow(coefficient, currentOwned + 1);
+    }
+
+    public void buy() {
+        currentOwned++;
     }
 }

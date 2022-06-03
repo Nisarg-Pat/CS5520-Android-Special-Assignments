@@ -2,8 +2,10 @@ package com.cs5520.assignments.numad22su_nisargpatel;
 
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class GeneratorViewHolder extends RecyclerView.ViewHolder {
@@ -13,6 +15,7 @@ public class GeneratorViewHolder extends RecyclerView.ViewHolder {
     public TextView timeTV;
     public TextView buyTV;
     public TextView costTV;
+    public ConstraintLayout buyView;
 
     public GeneratorViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -21,15 +24,20 @@ public class GeneratorViewHolder extends RecyclerView.ViewHolder {
         buyTV = itemView.findViewById(R.id.generator_item_buy_tv);
         costTV = itemView.findViewById(R.id.generator_item_cost_tv);
         timeTV = itemView.findViewById(R.id.generator_item_time_tv);
-
+        buyView = itemView.findViewById(R.id.generator_item_buy_view);
     }
 
-    public void bindData(Generator generator) {
+    public void bindData(Generator generator, GeneratorAdapter generatorAdapter) {
         countTV.setText(String.format("%d/%d", generator.getCurrentOwned(), generator.getNextBonusCount()));
         earningTV.setText(String.format("%.0f", generator.getProduction()));
         buyTV.setText(String.format("Buy %d", generator.getNextBonusCount()-generator.getCurrentOwned()));
         costTV.setText(String.format("%.0f", generator.getCost()));
         timeTV.setText(String.format("%.0f", generator.getInitialTime()));
+        buyView.setOnClickListener((view) -> clickBuyView(generator, generatorAdapter));
+    }
 
+    private void clickBuyView(Generator generator, GeneratorAdapter generatorAdapter) {
+        generator.buy();
+        generatorAdapter.notifyDataSetChanged();
     }
 }
