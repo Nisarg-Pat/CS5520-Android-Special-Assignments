@@ -32,6 +32,7 @@ public class GameActivity extends AppCompatActivity {
         generatorRecyclerView = findViewById(R.id.generator_rv);
 
         generatorRecyclerView.setHasFixedSize(true);
+        generatorRecyclerView.setItemAnimator(null);
         generatorRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         generatorRecyclerView.setAdapter(new GeneratorAdapter(getGeneratorList(), this));
     }

@@ -51,10 +51,7 @@ public class Generator {
     }
 
     public int getNextBonusCount() {
-        if (this.currentOwned == 0) {
-            return 100;
-        }
-        return ((currentOwned - 1) / 100 + 1) * 100;
+        return ((currentOwned) / 100 + 1) * 100;
     }
 
     public double getProduction() {
