@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,7 +22,7 @@ public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.Gene
     public static class GeneratorViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView countTV;
-        private final TextView earningTV;
+        private final ProgressBar earningProgress;
         private final TextView timeTV;
         private final TextView buyTV;
         private final TextView costTV;
@@ -30,7 +31,7 @@ public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.Gene
         public GeneratorViewHolder(@NonNull View itemView) {
             super(itemView);
             countTV = itemView.findViewById(R.id.generator_item_count);
-            earningTV = itemView.findViewById(R.id.generator_item_earnings_tv);
+            earningProgress = itemView.findViewById(R.id.generator_item_earnings_progress_bar);
             buyTV = itemView.findViewById(R.id.generator_item_buy_tv);
             costTV = itemView.findViewById(R.id.generator_item_cost_tv);
             timeTV = itemView.findViewById(R.id.generator_item_time_tv);
@@ -56,7 +57,6 @@ public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.Gene
     public void onBindViewHolder(@NonNull GeneratorViewHolder holder, int position) {
         Generator generator = generatorList.get(position);
         holder.countTV.setText(String.format("%d/%d", generator.getCurrentOwned(), generator.getNextBonusCount()));
-        holder.earningTV.setText(String.format("%.2f per sec", generator.getProduction()));
         holder.buyTV.setText(String.format("Buy %d", generator.getBuyCount(buyType)));
         holder.costTV.setText(String.format("%.2f", generator.getCost(buyType)));
         holder.timeTV.setText(String.format("%.0f", generator.getInitialTime()));

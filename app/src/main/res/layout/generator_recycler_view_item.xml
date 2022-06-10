@@ -25,18 +25,18 @@
         app:layout_constraintBottom_toBottomOf="@id/generator_item_icon"
         app:layout_constraintStart_toStartOf="@id/generator_item_icon" />
 
-    <TextView
-        android:id="@+id/generator_item_earnings_tv"
+    <ProgressBar
+        android:id="@+id/generator_item_earnings_progress_bar"
         android:layout_width="@dimen/fit_constraint"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_mid"
         android:layout_marginTop="@dimen/margin_mid"
         android:layout_marginEnd="@dimen/margin_mid"
-        android:background="#00FF00"
         android:gravity="center_horizontal"
-        android:text="44.793 octillion /sec"
-        android:textSize="20sp"
-        android:textColor="@color/black"
+        android:progress="25"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:background="@drawable/black_border"
+        android:minHeight="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/generator_item_icon"
         app:layout_constraintTop_toTopOf="parent" />
@@ -52,7 +52,7 @@
         android:clickable="true"
         app:layout_constraintEnd_toStartOf="@id/generator_item_time_tv"
         app:layout_constraintStart_toEndOf="@id/generator_item_icon"
-        app:layout_constraintTop_toBottomOf="@id/generator_item_earnings_tv">
+        app:layout_constraintTop_toBottomOf="@id/generator_item_earnings_progress_bar">
 
         <TextView
             android:id="@+id/generator_item_buy_tv"
@@ -89,6 +89,6 @@
         android:text="100s"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/generator_item_buy_view"
-        app:layout_constraintTop_toBottomOf="@id/generator_item_earnings_tv" />
+        app:layout_constraintTop_toBottomOf="@id/generator_item_earnings_progress_bar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

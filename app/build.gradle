@@ -29,6 +29,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.nisargpat
         }
+        applicationVariants.all{
+            variant ->
+                variant.outputs.each{
+                    output->
+                        output.outputFileName  = "NUMAD22Su_NisargPatel.apk"
+                }
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
