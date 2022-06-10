@@ -50,6 +50,12 @@ public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.Gene
     public GeneratorViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         GeneratorViewHolder holder = new GeneratorViewHolder(LayoutInflater.from(context).inflate(R.layout.generator_recycler_view_item, parent, false));
         holder.buyView.setOnClickListener((v) -> clickBuyView(holder.getAdapterPosition()));
+        holder.earningProgress.setOnClickListener((v) -> {
+            if(!generatorList.get(holder.getAdapterPosition()).isInProgress()) {
+                GeneratorProgressThread gpt = new GeneratorProgressThread(holder, generatorList.get(holder.getAdapterPosition()));
+                new Thread(gpt).start();
+            }
+        });
         return holder;
     }
 
@@ -77,6 +83,37 @@ public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.Gene
         this.buyType = newBuyType;
         notifyItemRangeChanged(0, getItemCount());
     }
-    
 
+    public static class GeneratorProgressThread implements Runnable {
+
+        GeneratorViewHolder holder;
+        Generator generator;
+
+        public GeneratorProgressThread(GeneratorViewHolder holder, Generator generator) {
+            this.holder = holder;
+            this.generator = generator;
+        }
+
+        @Override
+        public void run() {
+            long sleepTime = (long)(generator.getInitialTime()*10);
+            generator.setInProgress(true);
+            int current = 0;
+            while(current!=100) {
+                try {
+                    Thread.sleep((sleepTime));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                current++;
+                holder.earningProgress.setProgress(current);
+            }
+            holder.earningProgress.setProgress(0);
+            generator.setInProgress(false);
+            if (generator.isManagerEnabled()) {
+                run();
+            }
+
+        }
+    }
 }

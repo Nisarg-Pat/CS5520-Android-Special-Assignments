@@ -36,7 +36,6 @@
         android:layout_marginTop="@dimen/margin_mid"
         android:layout_marginEnd="@dimen/margin_mid"
         android:gravity="center_horizontal"
-        android:progress="25"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:background="@drawable/black_border"
         android:minHeight="20dp"

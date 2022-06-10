@@ -9,6 +9,8 @@ public class Generator {
     private final double initialProductivity;
     private int currentOwned;
     private double multiplier;
+    private boolean inProgress;
+    private boolean managerEnabled;
 
     private static final int MAX_ALLOWED = 1000;
 
@@ -21,6 +23,7 @@ public class Generator {
         this.initialProductivity = initialProductivity;
         this.currentOwned = 0;
         this.multiplier = 1.0;
+        this.inProgress = false;
     }
 
     public String getName() {
@@ -81,5 +84,21 @@ public class Generator {
         } else {
             return buyType.getCount();
         }
+    }
+
+    public boolean isInProgress() {
+        return inProgress;
+    }
+
+    public void setInProgress(boolean inProgress) {
+        this.inProgress = inProgress;
+    }
+
+    public boolean isManagerEnabled() {
+        return managerEnabled;
+    }
+
+    public void setManagerEnabled(boolean managerEnabled) {
+        this.managerEnabled = managerEnabled;
     }
 }
