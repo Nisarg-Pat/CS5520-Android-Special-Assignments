@@ -16,6 +16,10 @@ public class Player {
     }
 
     public void addAmount(double production) {
-        totalAmount+=production;
+        totalAmount += production;
+    }
+
+    public void subtractAmount(double cost) {
+        totalAmount -= cost;
     }
 }

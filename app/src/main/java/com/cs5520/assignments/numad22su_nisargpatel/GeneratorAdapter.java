@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -26,6 +27,8 @@ public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.Gene
     private final TextView scoreTV;
     private final Handler scoreHandler = new Handler();
 
+    private static final Object playerScoreLock = new Object();
+
     public static class GeneratorViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView countTV;
@@ -34,6 +37,7 @@ public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.Gene
         private final TextView buyTV;
         private final TextView costTV;
         private final ConstraintLayout buyView;
+        private final ImageView generatorImage;
 
         public GeneratorViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -43,6 +47,7 @@ public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.Gene
             costTV = itemView.findViewById(R.id.generator_item_cost_tv);
             timeTV = itemView.findViewById(R.id.generator_item_time_tv);
             buyView = itemView.findViewById(R.id.generator_item_buy_view);
+            generatorImage = itemView.findViewById(R.id.generator_item_icon);
         }
     }
 
@@ -51,7 +56,7 @@ public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.Gene
         this.context = context;
         this.buyType = buyType;
         this.player = player;
-        scoreTV = ((Activity)context).findViewById(R.id.score_tv);
+        scoreTV = ((Activity) context).findViewById(R.id.score_tv);
     }
 
     @NonNull
@@ -59,12 +64,8 @@ public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.Gene
     public GeneratorViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         GeneratorViewHolder holder = new GeneratorViewHolder(LayoutInflater.from(context).inflate(R.layout.generator_recycler_view_item, parent, false));
         holder.buyView.setOnClickListener((v) -> clickBuyView(holder.getAdapterPosition()));
-        holder.earningProgress.setOnClickListener((v) -> {
-            if (!generatorList.get(holder.getAdapterPosition()).isInProgress()) {
-                GeneratorProgressThread gpt = new GeneratorProgressThread(holder, generatorList.get(holder.getAdapterPosition()), player);
-                new Thread(gpt).start();
-            }
-        });
+        holder.earningProgress.setOnClickListener((v) -> clickGeneratorRevenue(holder));
+        holder.generatorImage.setOnClickListener((v) -> clickGeneratorRevenue(holder));
         return holder;
     }
 
@@ -84,8 +85,25 @@ public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.Gene
     }
 
     public void clickBuyView(int position) {
-        generatorList.get(position).buy(buyType);
+        double cost = generatorList.get(position).getCost(buyType);
+        if (cost > player.getTotalAmount()) {
+            return;
+        }
+        synchronized (playerScoreLock) {
+            player.subtractAmount(cost);
+            generatorList.get(position).buy(buyType);
+        }
+        scoreTV.setText(String.format("%.2f", player.getTotalAmount()));
         notifyItemChanged(position);
+    }
+
+    public void clickGeneratorRevenue(GeneratorViewHolder holder) {
+        Generator generator = generatorList.get(holder.getAdapterPosition());
+        if (generator.isInProgress() || generator.getCurrentOwned() == 0) {
+            return;
+        }
+        GeneratorProgressThread gpt = new GeneratorProgressThread(holder, generator, player);
+        new Thread(gpt).start();
     }
 
     public void updateBuyType(BuyType newBuyType) {
@@ -121,7 +139,9 @@ public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.Gene
             }
             holder.earningProgress.setProgress(0);
             generator.setInProgress(false);
-            player.addAmount(generator.getProduction());
+            synchronized (playerScoreLock) {
+                player.addAmount(generator.getProduction());
+            }
             scoreHandler.post(() -> {
                 scoreTV.setText(String.format("%.2f", player.getTotalAmount()));
             });

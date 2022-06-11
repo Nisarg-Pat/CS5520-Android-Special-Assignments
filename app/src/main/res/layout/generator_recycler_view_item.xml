@@ -11,10 +11,10 @@
         android:layout_marginStart="@dimen/margin_mid"
         android:layout_marginTop="@dimen/margin_mid"
         android:src="@drawable/stop"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/generator_item_earnings_progress_bar"/>
+        app:layout_constraintEnd_toStartOf="@id/generator_item_earnings_progress_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/generator_item_count"
@@ -25,24 +25,34 @@
         android:text="100/200"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/generator_item_icon"
-        app:layout_constraintStart_toStartOf="@id/generator_item_icon"
-        app:layout_constraintEnd_toEndOf="@id/generator_item_icon"/>
+        app:layout_constraintEnd_toEndOf="@id/generator_item_icon"
+        app:layout_constraintStart_toStartOf="@id/generator_item_icon" />
+
+<!--    <TextView-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="@dimen/margin_mid"-->
+<!--        android:gravity="center_horizontal"-->
+<!--        android:text="ABC"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/generator_item_earnings_progress_bar"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/generator_item_earnings_progress_bar"-->
+<!--        app:layout_constraintStart_toStartOf="@id/generator_item_earnings_progress_bar"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <ProgressBar
         android:id="@+id/generator_item_earnings_progress_bar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="@dimen/fit_constraint"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_mid"
         android:layout_marginTop="@dimen/margin_mid"
         android:layout_marginEnd="@dimen/margin_mid"
         android:gravity="center_horizontal"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:background="@drawable/black_border"
-        android:minHeight="20dp"
+        android:indeterminate="false"
+        app:layout_constraintBottom_toTopOf="@id/generator_item_buy_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/generator_item_icon"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/generator_item_buy_view"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/generator_item_buy_view"
@@ -51,12 +61,12 @@
         android:layout_marginStart="@dimen/margin_mid"
         android:layout_marginTop="@dimen/margin_mid"
         android:background="@drawable/black_border"
-        android:padding="@dimen/padding_mid"
         android:clickable="true"
+        android:padding="@dimen/padding_mid"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/generator_item_time_tv"
         app:layout_constraintStart_toEndOf="@id/generator_item_icon"
-        app:layout_constraintTop_toBottomOf="@id/generator_item_earnings_progress_bar"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/generator_item_earnings_progress_bar">
 
         <TextView
             android:id="@+id/generator_item_buy_tv"
@@ -64,10 +74,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_mid"
             android:text="Buy 100"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:textColor="@color/black"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/generator_item_cost_tv"
@@ -75,10 +85,10 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_mid"
             android:text="Cost"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:textColor="@color/black"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
@@ -88,14 +98,14 @@
         android:layout_marginStart="@dimen/margin_mid"
         android:layout_marginTop="@dimen/margin_mid"
         android:layout_marginEnd="@dimen/margin_mid"
-        android:padding="@dimen/padding_mid"
         android:background="#00FF00"
         android:gravity="center_horizontal"
-        android:textColor="@color/black"
+        android:padding="@dimen/padding_mid"
         android:text="100s"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/generator_item_buy_view"
-        app:layout_constraintTop_toBottomOf="@id/generator_item_earnings_progress_bar"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/generator_item_earnings_progress_bar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

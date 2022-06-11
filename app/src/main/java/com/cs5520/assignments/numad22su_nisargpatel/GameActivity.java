@@ -89,8 +89,7 @@ public class GameActivity extends AppCompatActivity {
         generatorList.add(new Generator("Car Wash", 720, 1.14, 6, 540, 90));
         generatorList.add(new Generator("Pizza Delivery", 8640, 1.13, 12, 4320, 360));
         generatorList.add(new Generator("Donut Stop", 103680, 1.12, 24, 51840, 2160));
-        generatorList.get(0).setManagerEnabled(true);
-        generatorList.get(1).setManagerEnabled(true);
+        generatorList.get(0).buy(BuyType.BUY_1x);
         return generatorList;
     }
 }
