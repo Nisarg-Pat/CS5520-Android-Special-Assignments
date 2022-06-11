@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,8 @@ public class GameActivity extends AppCompatActivity {
     RecyclerView generatorRecyclerView;
     GeneratorAdapter generatorAdapter;
     BuyType buyType;
+    Player player;
+    TextView scoreTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,10 @@ public class GameActivity extends AppCompatActivity {
                 | View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
         setContentView(R.layout.activity_game);
+
+        player = new Player();
+        scoreTV = findViewById(R.id.score_tv);
+        setScoreTV();
 
         upgradeBuy = findViewById(R.id.upgrade_button);
         buyType = BuyType.BUY_1x;
@@ -38,8 +45,12 @@ public class GameActivity extends AppCompatActivity {
         generatorRecyclerView.setHasFixedSize(true);
         generatorRecyclerView.setItemAnimator(null);
         generatorRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        generatorAdapter = new GeneratorAdapter(getGeneratorList(), this, buyType);
+        generatorAdapter = new GeneratorAdapter(this, getGeneratorList(),player, buyType);
         generatorRecyclerView.setAdapter(generatorAdapter);
+    }
+
+    public void setScoreTV() {
+        scoreTV.setText(Long.toString((long) player.getTotalAmount()));
     }
 
     private String getBuyTypeString() {
@@ -78,6 +89,8 @@ public class GameActivity extends AppCompatActivity {
         generatorList.add(new Generator("Car Wash", 720, 1.14, 6, 540, 90));
         generatorList.add(new Generator("Pizza Delivery", 8640, 1.13, 12, 4320, 360));
         generatorList.add(new Generator("Donut Stop", 103680, 1.12, 24, 51840, 2160));
+        generatorList.get(0).setManagerEnabled(true);
+        generatorList.get(1).setManagerEnabled(true);
         return generatorList;
     }
 }

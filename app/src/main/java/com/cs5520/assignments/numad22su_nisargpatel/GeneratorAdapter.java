@@ -1,6 +1,8 @@
 package com.cs5520.assignments.numad22su_nisargpatel;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,9 +18,13 @@ import java.util.List;
 
 public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.GeneratorViewHolder> {
 
-    private List<Generator> generatorList;
+    private final List<Generator> generatorList;
     private BuyType buyType;
-    private Context context;
+    private final Context context;
+    private final Player player;
+
+    private final TextView scoreTV;
+    private final Handler scoreHandler = new Handler();
 
     public static class GeneratorViewHolder extends RecyclerView.ViewHolder {
 
@@ -39,10 +46,12 @@ public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.Gene
         }
     }
 
-    public GeneratorAdapter(List<Generator> generatorList, Context context, BuyType buyType) {
+    public GeneratorAdapter(Context context, List<Generator> generatorList, Player player, BuyType buyType) {
         this.generatorList = generatorList;
         this.context = context;
         this.buyType = buyType;
+        this.player = player;
+        scoreTV = ((Activity)context).findViewById(R.id.score_tv);
     }
 
     @NonNull
@@ -51,8 +60,8 @@ public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.Gene
         GeneratorViewHolder holder = new GeneratorViewHolder(LayoutInflater.from(context).inflate(R.layout.generator_recycler_view_item, parent, false));
         holder.buyView.setOnClickListener((v) -> clickBuyView(holder.getAdapterPosition()));
         holder.earningProgress.setOnClickListener((v) -> {
-            if(!generatorList.get(holder.getAdapterPosition()).isInProgress()) {
-                GeneratorProgressThread gpt = new GeneratorProgressThread(holder, generatorList.get(holder.getAdapterPosition()));
+            if (!generatorList.get(holder.getAdapterPosition()).isInProgress()) {
+                GeneratorProgressThread gpt = new GeneratorProgressThread(holder, generatorList.get(holder.getAdapterPosition()), player);
                 new Thread(gpt).start();
             }
         });
@@ -84,22 +93,24 @@ public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.Gene
         notifyItemRangeChanged(0, getItemCount());
     }
 
-    public static class GeneratorProgressThread implements Runnable {
+    class GeneratorProgressThread implements Runnable {
 
         GeneratorViewHolder holder;
         Generator generator;
+        Player player;
 
-        public GeneratorProgressThread(GeneratorViewHolder holder, Generator generator) {
+        public GeneratorProgressThread(GeneratorViewHolder holder, Generator generator, Player player) {
             this.holder = holder;
             this.generator = generator;
+            this.player = player;
         }
 
         @Override
         public void run() {
-            long sleepTime = (long)(generator.getInitialTime()*10);
+            long sleepTime = (long) (generator.getInitialTime() * 10);
             generator.setInProgress(true);
             int current = 0;
-            while(current!=100) {
+            while (current != 100) {
                 try {
                     Thread.sleep((sleepTime));
                 } catch (InterruptedException e) {
@@ -110,10 +121,13 @@ public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.Gene
             }
             holder.earningProgress.setProgress(0);
             generator.setInProgress(false);
+            player.addAmount(generator.getProduction());
+            scoreHandler.post(() -> {
+                scoreTV.setText(String.format("%.2f", player.getTotalAmount()));
+            });
             if (generator.isManagerEnabled()) {
                 run();
             }
-
         }
     }
 }
