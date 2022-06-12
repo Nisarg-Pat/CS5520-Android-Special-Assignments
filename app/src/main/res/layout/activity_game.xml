@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/adcap_background"
     tools:context=".GameActivity">
 
     <include
@@ -14,17 +15,17 @@
         android:id="@+id/generator_rv"
         android:layout_width="@dimen/fit_constraint"
         android:layout_height="@dimen/fit_constraint"
-        android:background="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/footer"
+        app:layout_constraintEnd_toStartOf="@id/right_button_list"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header"
-        app:layout_constraintBottom_toTopOf="@id/footer"
-        app:layout_constraintEnd_toStartOf="@id/right_button_list"/>
+        app:layout_constraintVertical_bias="1.0" />
 
     <ScrollView
         android:id="@+id/right_button_list"
         android:layout_width="50dp"
         android:layout_height="@dimen/fit_constraint"
-        android:background="@color/white"
         app:layout_constraintTop_toBottomOf="@+id/header"
         app:layout_constraintBottom_toTopOf="@+id/footer"
         app:layout_constraintEnd_toEndOf="parent">
