@@ -10,5 +10,6 @@
 
     <color name="adcap_orange">#FFA500</color>
     <color name="adcap_background">#BBBBBB</color>
-    <color name="adcap_dark_grey">#666666</color>
+    <color name="adcap_dark_grey">#777777</color>
+    <color name="adcap_time_green">#98FF98</color>
 </resources>

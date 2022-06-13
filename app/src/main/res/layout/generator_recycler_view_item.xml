@@ -19,24 +19,13 @@
         android:id="@+id/generator_item_count"
         android:layout_width="@dimen/generator_icon_width"
         android:layout_height="wrap_content"
-        android:background="#FF0000"
+        android:background="@color/adcap_dark_grey"
         android:gravity="center_horizontal"
         android:text="100/200"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/generator_item_icon"
         app:layout_constraintEnd_toEndOf="@id/generator_item_icon"
         app:layout_constraintStart_toStartOf="@id/generator_item_icon" />
-
-<!--    <TextView-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="@dimen/margin_mid"-->
-<!--        android:gravity="center_horizontal"-->
-<!--        android:text="ABC"-->
-<!--        app:layout_constraintBottom_toTopOf="@id/generator_item_earnings_progress_bar"-->
-<!--        app:layout_constraintEnd_toEndOf="@id/generator_item_earnings_progress_bar"-->
-<!--        app:layout_constraintStart_toStartOf="@id/generator_item_earnings_progress_bar"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <ProgressBar
         android:id="@+id/generator_item_earnings_progress_bar"
@@ -53,6 +42,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/generator_item_icon"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/generator_item_earnings_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="ABC"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@id/generator_item_earnings_progress_bar"
+        app:layout_constraintEnd_toEndOf="@id/generator_item_earnings_progress_bar"
+        app:layout_constraintStart_toStartOf="@id/generator_item_earnings_progress_bar"
+        app:layout_constraintTop_toTopOf="@id/generator_item_earnings_progress_bar" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/generator_item_buy_view"
@@ -99,7 +100,7 @@
         android:layout_marginStart="@dimen/margin_mid"
         android:layout_marginTop="@dimen/margin_mid"
         android:layout_marginEnd="@dimen/margin_mid"
-        android:background="#00FF00"
+        android:background="@color/adcap_time_green"
         android:gravity="center_horizontal"
         android:padding="@dimen/padding_mid"
         android:text="100s"

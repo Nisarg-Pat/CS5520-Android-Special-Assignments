@@ -4,7 +4,7 @@ public class Player {
     private double totalAmount;
 
     Player() {
-        this.totalAmount = 0.0;
+        this.totalAmount = 60.0;
     }
 
     public double getTotalAmount() {

@@ -2,6 +2,7 @@ package com.cs5520.assignments.numad22su_nisargpatel;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,13 +26,15 @@ public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.Gene
 
     private final TextView scoreTV;
     private final Handler scoreHandler = new Handler();
+    private final Handler timeHandler = new Handler();
 
     private static final Object playerScoreLock = new Object();
 
-    public static class GeneratorViewHolder extends RecyclerView.ViewHolder {
+    static class GeneratorViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView countTV;
         private final ProgressBar earningProgress;
+        private final TextView earningsTV;
         private final TextView timeTV;
         private final TextView buyTV;
         private final TextView costTV;
@@ -43,6 +45,7 @@ public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.Gene
             super(itemView);
             countTV = itemView.findViewById(R.id.generator_item_count);
             earningProgress = itemView.findViewById(R.id.generator_item_earnings_progress_bar);
+            earningsTV = itemView.findViewById(R.id.generator_item_earnings_tv);
             buyTV = itemView.findViewById(R.id.generator_item_buy_tv);
             costTV = itemView.findViewById(R.id.generator_item_cost_tv);
             timeTV = itemView.findViewById(R.id.generator_item_time_tv);
@@ -75,7 +78,13 @@ public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.Gene
         holder.countTV.setText(String.format("%d/%d", generator.getCurrentOwned(), generator.getNextBonusCount()));
         holder.buyTV.setText(String.format("Buy %d", generator.getBuyCount(buyType)));
         holder.costTV.setText(String.format("%.2f", generator.getCost(buyType)));
-        holder.timeTV.setText(String.format("%.0f", generator.getInitialTime()));
+        if (player.getTotalAmount() >= generator.getCost(buyType)) {
+            holder.buyView.setBackgroundColor(context.getColor(R.color.adcap_orange));
+        } else {
+            holder.buyView.setBackgroundColor(context.getColor(R.color.adcap_dark_grey));
+        }
+        holder.timeTV.setText(String.format("%d", generator.getRemainingTime()));
+        holder.earningsTV.setText(String.format("%.2f", generator.getRevenue()));
     }
 
 
@@ -93,7 +102,10 @@ public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.Gene
             player.subtractAmount(cost);
             generatorList.get(position).buy(buyType);
         }
-        scoreTV.setText(String.format("%.2f", player.getTotalAmount()));
+        if(generatorList.get(position).getCurrentOwned() >=25) {
+            generatorList.get(position).setManagerEnabled(true);
+        }
+        updateAmountChange();
         notifyItemChanged(position);
     }
 
@@ -110,6 +122,12 @@ public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.Gene
         this.buyType = newBuyType;
         notifyItemRangeChanged(0, getItemCount());
     }
+
+    public void updateAmountChange() {
+        scoreTV.setText(String.format("%.2f", player.getTotalAmount()));
+        notifyItemRangeChanged(0, getItemCount());
+    }
+
 
     class GeneratorProgressThread implements Runnable {
 
@@ -136,14 +154,19 @@ public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.Gene
                 }
                 current++;
                 holder.earningProgress.setProgress(current);
+                generator.setRemainingTimePercent(100-current);
+                timeHandler.post(() -> {
+                    notifyItemChanged(holder.getAdapterPosition());
+                });
             }
             holder.earningProgress.setProgress(0);
+            generator.resetRemainingTime();
             generator.setInProgress(false);
             synchronized (playerScoreLock) {
-                player.addAmount(generator.getProduction());
+                player.addAmount(generator.getRevenue());
             }
             scoreHandler.post(() -> {
-                scoreTV.setText(String.format("%.2f", player.getTotalAmount()));
+                updateAmountChange();
             });
             if (generator.isManagerEnabled()) {
                 run();

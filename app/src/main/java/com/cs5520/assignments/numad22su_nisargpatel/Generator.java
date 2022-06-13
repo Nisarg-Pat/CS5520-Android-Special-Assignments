@@ -11,6 +11,7 @@ public class Generator {
     private double multiplier;
     private boolean inProgress;
     private boolean managerEnabled;
+    private int remainingTime;
 
     private static final int MAX_ALLOWED = 1000;
 
@@ -24,6 +25,7 @@ public class Generator {
         this.currentOwned = 0;
         this.multiplier = 1.0;
         this.inProgress = false;
+        resetRemainingTime();
     }
 
     public String getName() {
@@ -59,8 +61,8 @@ public class Generator {
         return Math.min(MAX_ALLOWED, ((currentOwned) / 100 + 1) * 100);
     }
 
-    public double getProduction() {
-        return initialProductivity * currentOwned * multiplier;
+    public double getRevenue() {
+        return initialRevenue * currentOwned * multiplier;
     }
 
     public double getCost(BuyType buyType) {
@@ -76,7 +78,7 @@ public class Generator {
     }
 
     public int getBuyCount(BuyType buyType) {
-        if(currentOwned == MAX_ALLOWED) {
+        if (currentOwned == MAX_ALLOWED) {
             return 0;
         }
         if (buyType == BuyType.BUY_NEXT) {
@@ -100,5 +102,17 @@ public class Generator {
 
     public void setManagerEnabled(boolean managerEnabled) {
         this.managerEnabled = managerEnabled;
+    }
+
+    public int getRemainingTime() {
+        return remainingTime;
+    }
+
+    public void setRemainingTimePercent(int percent) {
+        this.remainingTime = (int)(this.initialTime*percent/100) +1;
+    }
+
+    public void resetRemainingTime() {
+        this.remainingTime = (int) Math.ceil(this.initialTime);
     }
 }
