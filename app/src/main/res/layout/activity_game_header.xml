@@ -33,15 +33,15 @@
         app:layout_constraintStart_toEndOf="@+id/person_icon"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <Button
+    <android.widget.Button
         android:id="@+id/upgrade_button"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_mid"
         android:text="@string/upgrade_buy_x1"
         android:textSize="12sp"
-        android:backgroundTint="#FFA500"
         android:textColor="@color/black"
+        android:background="@drawable/button_custom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />

@@ -84,7 +84,7 @@ public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.Gene
         holder.buyTV.setText(String.format("Buy %d", generator.getBuyCount(buyType)));
         holder.costTV.setText(String.format("%.2f", generator.getCost(buyType)));
         if (player.getTotalAmount() >= generator.getCost(buyType)) {
-            holder.buyView.setBackgroundColor(context.getColor(R.color.adcap_orange));
+            holder.buyView.setBackground(context.getDrawable(R.drawable.button_custom));
         } else {
             holder.buyView.setBackgroundColor(context.getColor(R.color.adcap_dark_grey));
         }
