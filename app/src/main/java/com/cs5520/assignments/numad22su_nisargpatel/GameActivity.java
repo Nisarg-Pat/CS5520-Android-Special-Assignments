@@ -4,6 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -21,6 +25,9 @@ public class GameActivity extends AppCompatActivity {
     BuyType buyType;
     Player player;
     TextView scoreTV;
+    MediaPlayer mediaPlayer;
+    SoundPool soundPool;
+    int upgradeBuySound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +47,19 @@ public class GameActivity extends AppCompatActivity {
         upgradeBuy.setText(getBuyTypeString());
         upgradeBuy.setOnClickListener((v) -> changeUpgradeBuy());
 
-        generatorRecyclerView = findViewById(R.id.generator_rv);
+        AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_GAME)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .build();
+        soundPool = new SoundPool.Builder().setMaxStreams(10)
+                .setAudioAttributes(audioAttributes).build();
+        upgradeBuySound = soundPool.load(this, R.raw.click, 1);
 
+        generatorRecyclerView = findViewById(R.id.generator_rv);
         generatorRecyclerView.setHasFixedSize(true);
         generatorRecyclerView.setItemAnimator(null);
         generatorRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        generatorAdapter = new GeneratorAdapter(this, getGeneratorList(),player, buyType);
+        generatorAdapter = new GeneratorAdapter(this, getGeneratorList(), player, buyType, soundPool);
         generatorRecyclerView.setAdapter(generatorAdapter);
     }
 
@@ -80,6 +94,7 @@ public class GameActivity extends AppCompatActivity {
         }
         upgradeBuy.setText(getBuyTypeString());
         generatorAdapter.updateBuyType(buyType);
+        soundPool.play(upgradeBuySound, 1, 1, 0, 0, 1);
     }
 
     private List<Generator> getGeneratorList() {
@@ -91,5 +106,28 @@ public class GameActivity extends AppCompatActivity {
         generatorList.add(new Generator("Donut Stop", 103680, 1.12, 24, 51840, 2160));
         generatorList.get(0).buy(BuyType.BUY_1x);
         return generatorList;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mediaPlayer = MediaPlayer.create(this, R.raw.theme_main);
+        mediaPlayer.seekTo(400);
+        mediaPlayer.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mediaPlayer.stop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mediaPlayer.release();
+        mediaPlayer = null;
+        soundPool.release();
+        soundPool = null;
     }
 }

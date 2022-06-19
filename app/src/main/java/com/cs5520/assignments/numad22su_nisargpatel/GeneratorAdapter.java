@@ -3,6 +3,7 @@ package com.cs5520.assignments.numad22su_nisargpatel;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.media.SoundPool;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,8 @@ public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.Gene
     private BuyType buyType;
     private final Context context;
     private final Player player;
+    private final SoundPool soundPool;
+    private final int generatorBuySound;
 
     private final TextView scoreTV;
     private final Handler scoreHandler = new Handler();
@@ -54,11 +57,13 @@ public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.Gene
         }
     }
 
-    public GeneratorAdapter(Context context, List<Generator> generatorList, Player player, BuyType buyType) {
+    public GeneratorAdapter(Context context, List<Generator> generatorList, Player player, BuyType buyType, SoundPool soundPool) {
         this.generatorList = generatorList;
         this.context = context;
         this.buyType = buyType;
         this.player = player;
+        this.soundPool = soundPool;
+        this.generatorBuySound = soundPool.load(context, R.raw.cash, 1);
         scoreTV = ((Activity) context).findViewById(R.id.score_tv);
     }
 
@@ -102,6 +107,7 @@ public class GeneratorAdapter extends RecyclerView.Adapter<GeneratorAdapter.Gene
             player.subtractAmount(cost);
             generatorList.get(position).buy(buyType);
         }
+        soundPool.play(generatorBuySound, 1, 1, 0, 0, 1);
         if(generatorList.get(position).getCurrentOwned() >=25) {
             generatorList.get(position).setManagerEnabled(true);
         }
