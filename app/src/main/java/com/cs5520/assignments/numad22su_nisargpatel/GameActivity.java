@@ -61,6 +61,10 @@ public class GameActivity extends AppCompatActivity {
         generatorRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         generatorAdapter = new GeneratorAdapter(this, getGeneratorList(), player, buyType, soundPool);
         generatorRecyclerView.setAdapter(generatorAdapter);
+
+        mediaPlayer = MediaPlayer.create(this, R.raw.theme_main);
+        mediaPlayer.setLooping(true);
+        mediaPlayer.seekTo(400);
     }
 
     public void setScoreTV() {
@@ -111,20 +115,19 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mediaPlayer = MediaPlayer.create(this, R.raw.theme_main);
-        mediaPlayer.seekTo(400);
         mediaPlayer.start();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mediaPlayer.stop();
+        mediaPlayer.pause();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mediaPlayer.stop();
         mediaPlayer.release();
         mediaPlayer = null;
         soundPool.release();
