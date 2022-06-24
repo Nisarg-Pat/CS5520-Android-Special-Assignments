@@ -9,4 +9,7 @@
     <string name="buy">Buy</string>
     <string name="at_your_service">A7 At Your Service</string>
     <string name="adcap_clone">AdCap Clone</string>
+    <string name="ays_et_hint">eg. Burger</string>
+    <string name="ays_search_str">Search</string>
+    <string name="ays_clear_btn_str">Clear</string>
 </resources>

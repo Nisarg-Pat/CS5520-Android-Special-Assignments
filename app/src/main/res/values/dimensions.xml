@@ -11,4 +11,6 @@
     <dimen name="generator_icon_width">60dp</dimen>
 
     <dimen name="right_button_dimen">36dp</dimen>
+
+    <dimen name="at_your_service_image_icon_dimen">80dp</dimen>
 </resources>
