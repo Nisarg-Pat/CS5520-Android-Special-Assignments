@@ -10,9 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NUMAD22Su_NisargPatel">
         <activity
+            android:name=".AtYourService"
+            android:exported="false" />
+        <activity
             android:name=".GameActivity"
             android:exported="false"
-            android:theme="@style/Theme.NUMAD22Su_NisargPatel_NoActionBar"/>
+            android:theme="@style/Theme.NUMAD22Su_NisargPatel_NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
