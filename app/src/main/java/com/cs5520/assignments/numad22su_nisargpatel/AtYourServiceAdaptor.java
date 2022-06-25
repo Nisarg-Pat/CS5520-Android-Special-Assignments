@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,7 +66,7 @@ public class AtYourServiceAdaptor extends RecyclerView.Adapter<AtYourServiceAdap
         holder.foodItemName.setText(item.getName());
         holder.foodItemIcon.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.button_custom));
         holder.foodItemDescription.setVisibility(item.isExpanded() ? View.VISIBLE : View.GONE);
-        holder.foodItemDescription.setText("Hello World");
+        holder.foodItemDescription.setText(Html.fromHtml(item.getDescription(), Html.FROM_HTML_MODE_COMPACT));
         if (item.getImageIconBmp() == null) {
             new Thread(new DownloadImageThread(holder.foodItemIcon, item)).start();
         } else {

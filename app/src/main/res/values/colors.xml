@@ -13,4 +13,6 @@
     <color name="adcap_background">#BBBBBB</color>
     <color name="adcap_dark_grey">#777777</color>
     <color name="adcap_time_green">#98FF98</color>
+
+    <color name="ays_item_background">#DDDDDD</color>
 </resources>

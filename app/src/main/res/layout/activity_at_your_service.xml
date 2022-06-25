@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/calorie_slider"
+        app:layout_constraintBottom_toTopOf="@id/calorie_slider_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ays_query_et">
@@ -50,18 +50,37 @@
             android:text="Gluten Free" />
     </LinearLayout>
 
-    <com.google.android.material.slider.RangeSlider
-        android:id="@+id/calorie_slider"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/calorie_slider_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:stepSize="10"
-        android:valueFrom="50"
-        android:valueTo="800"
         app:layout_constraintBottom_toTopOf="@id/ays_search_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/diet_checkbox"
-        app:values="@array/initial_slider_values" />
+        app:layout_constraintTop_toBottomOf="@id/diet_checkbox">
+        <TextView
+            android:id="@+id/calorie_slider_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Calorie Range"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/calorie_slider"
+            android:layout_width="@dimen/fit_constraint"
+            android:layout_height="wrap_content"
+            android:stepSize="1"
+            android:valueFrom="50"
+            android:valueTo="800"
+            android:layout_marginStart="@dimen/margin_mid"
+            android:layout_marginEnd="@dimen/margin_mid"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/calorie_slider_tv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:values="@array/initial_slider_values" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/ays_search_btn"
@@ -70,7 +89,7 @@
         android:text="@string/ays_search_str"
         app:layout_constraintEnd_toStartOf="@id/ays_clear_btn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calorie_slider" />
+        app:layout_constraintTop_toBottomOf="@+id/calorie_slider_layout" />
 
     <Button
         android:id="@+id/ays_clear_btn"
@@ -79,7 +98,7 @@
         android:text="@string/ays_clear_btn_str"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/ays_search_btn"
-        app:layout_constraintTop_toBottomOf="@id/calorie_slider" />
+        app:layout_constraintTop_toBottomOf="@id/calorie_slider_layout" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ays_recycler_view"
@@ -87,6 +106,6 @@
         android:layout_height="@dimen/fit_constraint"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ays_search_btn" />
 </androidx.constraintlayout.widget.ConstraintLayout>

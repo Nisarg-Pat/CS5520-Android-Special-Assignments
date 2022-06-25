@@ -58,7 +58,7 @@ public class AtYourService extends AppCompatActivity implements View.OnClickList
         });
         minCalorie = (int)((float)(aysCalorieSlider.getValues().get(0)));
         maxCalorie = (int)((float)(aysCalorieSlider.getValues().get(1)));
-        Log.d("HASHSET", foodCategory.toString());
+        Log.d("SLIDER", minCalorie+" "+maxCalorie);
 
         foodCategory = new HashSet<>();
 

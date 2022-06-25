@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/padding_mid">
+    android:background="@drawable/food_item_background"
+    android:padding="@dimen/padding_mid"
+    android:layout_margin="@dimen/margin_mid">
 
     <ImageView
         android:id="@+id/food_item_icon"
