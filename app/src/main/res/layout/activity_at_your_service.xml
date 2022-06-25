@@ -32,36 +32,31 @@
             android:id="@+id/checkbox_vegetarian"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Vegetarian"
-            android:onClick="onClick"/>
+            android:onClick="onClick"
+            android:text="Vegetarian" />
 
         <CheckBox
             android:id="@+id/checkbox_vegan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Vegan"
-            android:onClick="onClick"/>
+            android:onClick="onClick"
+            android:text="Vegan" />
 
         <CheckBox
             android:id="@+id/checkbox_gluten_free"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Gluten Free"
-            android:onClick="onClick"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/ays_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/fit_constraint" />
+            android:onClick="onClick"
+            android:text="Gluten Free" />
     </LinearLayout>
 
     <com.google.android.material.slider.RangeSlider
         android:id="@+id/calorie_slider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:stepSize="10.0"
-        android:valueFrom="50.0"
-        android:valueTo="800.0"
+        android:stepSize="10"
+        android:valueFrom="50"
+        android:valueTo="800"
         app:layout_constraintBottom_toTopOf="@id/ays_search_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -86,4 +81,12 @@
         app:layout_constraintStart_toEndOf="@id/ays_search_btn"
         app:layout_constraintTop_toBottomOf="@id/calorie_slider" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ays_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fit_constraint"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ays_search_btn" />
 </androidx.constraintlayout.widget.ConstraintLayout>

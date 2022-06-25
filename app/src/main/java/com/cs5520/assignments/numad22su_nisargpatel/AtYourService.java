@@ -1,10 +1,13 @@
 package com.cs5520.assignments.numad22su_nisargpatel;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -24,6 +27,8 @@ public class AtYourService extends AppCompatActivity implements View.OnClickList
     Button aysSearch, aysClear;
     RangeSlider aysCalorieSlider;
     Set<String> foodCategory;
+    int minCalorie;
+    int maxCalorie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +36,29 @@ public class AtYourService extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_at_your_service);
         aysEditText = findViewById(R.id.ays_query_et);
         aysSearch = findViewById(R.id.ays_search_btn);
+        aysSearch.setOnClickListener(this);
         aysClear = findViewById(R.id.ays_clear_btn);
         aysClear.setOnClickListener(this);
+
         aysCalorieSlider = findViewById(R.id.calorie_slider);
+        aysCalorieSlider.addOnSliderTouchListener(new RangeSlider.OnSliderTouchListener() {
+            @SuppressLint("RestrictedApi")
+            @Override
+            public void onStartTrackingTouch(@NonNull RangeSlider slider) {
+                //Empty
+            }
+
+            @SuppressLint("RestrictedApi")
+            @Override
+            public void onStopTrackingTouch(@NonNull RangeSlider slider) {
+                minCalorie = (int)((float)(aysCalorieSlider.getValues().get(0)));
+                maxCalorie = (int)((float)(aysCalorieSlider.getValues().get(1)));
+                Log.d("SLIDER", minCalorie+" "+maxCalorie);
+            }
+        });
+        minCalorie = (int)((float)(aysCalorieSlider.getValues().get(0)));
+        maxCalorie = (int)((float)(aysCalorieSlider.getValues().get(1)));
+        Log.d("HASHSET", foodCategory.toString());
 
         foodCategory = new HashSet<>();
 
@@ -73,18 +98,22 @@ public class AtYourService extends AppCompatActivity implements View.OnClickList
             } else {
                 foodCategory.remove(FoodItem.VEGETARIAN);
             }
+            Log.d("HASHSET", foodCategory.toString());
         } else if (view.getId() == R.id.checkbox_vegan) {
             if (((CheckBox) view).isChecked()) {
                 foodCategory.add(FoodItem.VEGAN);
             } else {
                 foodCategory.remove(FoodItem.VEGAN);
             }
+            Log.d("HASHSET", foodCategory.toString());
         } else if (view.getId() == R.id.checkbox_gluten_free) {
             if (((CheckBox) view).isChecked()) {
                 foodCategory.add(FoodItem.GLUTEN_FREE);
             } else {
                 foodCategory.remove(FoodItem.GLUTEN_FREE);
             }
+            Log.d("HASHSET", foodCategory.toString());
         }
+
     }
 }
