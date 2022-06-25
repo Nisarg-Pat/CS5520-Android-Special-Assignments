@@ -32,6 +32,7 @@ public class AtYourServiceAdaptor extends RecyclerView.Adapter<AtYourServiceAdap
     List<FoodItem> foodItems;
     Context context;
     Handler imageIconHandler = new Handler();
+    int previouslyClickedPosition = -1;
 
     static class AtYourServiceViewHolder extends RecyclerView.ViewHolder {
         private ImageView foodItemIcon;
@@ -63,12 +64,22 @@ public class AtYourServiceAdaptor extends RecyclerView.Adapter<AtYourServiceAdap
         FoodItem item = foodItems.get(position);
         holder.foodItemName.setText(item.getName());
         holder.foodItemIcon.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.button_custom));
-        holder.foodItemDescription.setVisibility(item.isExpanded()? View.VISIBLE : View.GONE);
-        if(item.getImageIconBmp() == null) {
+        holder.foodItemDescription.setVisibility(item.isExpanded() ? View.VISIBLE : View.GONE);
+        holder.foodItemDescription.setText("Hello World");
+        if (item.getImageIconBmp() == null) {
             new Thread(new DownloadImageThread(holder.foodItemIcon, item)).start();
         } else {
             holder.foodItemIcon.setImageBitmap(item.getImageIconBmp());
         }
+        holder.itemView.setOnClickListener((v) -> {
+            if (previouslyClickedPosition >= 0 && previouslyClickedPosition != position) {
+                foodItems.get(previouslyClickedPosition).setExpanded(false);
+            }
+            item.setExpanded(!item.isExpanded());
+            notifyItemChanged(position);
+            notifyItemChanged(previouslyClickedPosition);
+            previouslyClickedPosition = holder.getAdapterPosition();
+        });
     }
 
     class DownloadImageThread implements Runnable {
@@ -101,5 +112,11 @@ public class AtYourServiceAdaptor extends RecyclerView.Adapter<AtYourServiceAdap
     @Override
     public int getItemCount() {
         return foodItems.size();
+    }
+
+    public void clearFoodItems() {
+        int previousSize = getItemCount();
+        foodItems = new ArrayList<>();
+        notifyItemRangeRemoved(0, previousSize);
     }
 }

@@ -10,39 +10,80 @@
         android:id="@+id/ays_query_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_mid"
         android:layout_marginStart="@dimen/margin_lg"
+        android:layout_marginTop="@dimen/margin_mid"
         android:layout_marginEnd="@dimen/margin_lg"
         android:hint="@string/ays_et_hint"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/diet_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/calorie_slider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ays_query_et">
+
+        <CheckBox
+            android:id="@+id/checkbox_vegetarian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vegetarian"
+            android:onClick="onClick"/>
+
+        <CheckBox
+            android:id="@+id/checkbox_vegan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vegan"
+            android:onClick="onClick"/>
+
+        <CheckBox
+            android:id="@+id/checkbox_gluten_free"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gluten Free"
+            android:onClick="onClick"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/ays_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fit_constraint" />
+    </LinearLayout>
+
+    <com.google.android.material.slider.RangeSlider
+        android:id="@+id/calorie_slider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stepSize="10.0"
+        android:valueFrom="50.0"
+        android:valueTo="800.0"
+        app:layout_constraintBottom_toTopOf="@id/ays_search_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/diet_checkbox"
+        app:values="@array/initial_slider_values" />
 
     <Button
         android:id="@+id/ays_search_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ays_search_str"
-        app:layout_constraintTop_toBottomOf="@+id/ays_query_et"
+        app:layout_constraintEnd_toStartOf="@id/ays_clear_btn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/ays_clear_btn"/>
+        app:layout_constraintTop_toBottomOf="@+id/calorie_slider" />
 
     <Button
         android:id="@+id/ays_clear_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ays_clear_btn_str"
-        app:layout_constraintTop_toBottomOf="@id/ays_query_et"
-        app:layout_constraintStart_toEndOf="@id/ays_search_btn"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/ays_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/fit_constraint"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ays_search_btn"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintStart_toEndOf="@id/ays_search_btn"
+        app:layout_constraintTop_toBottomOf="@id/calorie_slider" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,6 +9,10 @@ public class FoodItem {
     private boolean isExpanded;
     private Bitmap imageIconBmp;
 
+    public static final String VEGETARIAN = "vegetarian";
+    public static final String VEGAN = "vegan";
+    public static final String GLUTEN_FREE = "gluten_free";
+
     public FoodItem(String id, String name, String imageURL) {
         this.id = id;
         this.name = name;
