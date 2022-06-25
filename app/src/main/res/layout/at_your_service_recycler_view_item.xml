@@ -26,5 +26,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="Burger" />
 
+    <TextView
+        android:id="@+id/food_item_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/food_item_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="Description" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

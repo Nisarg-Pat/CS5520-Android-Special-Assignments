@@ -37,6 +37,14 @@ public class AtYourService extends AppCompatActivity {
         foodItemList.add(new FoodItem("511728","Pasta Margherita","https://spoonacular.com/recipeImages/511728-312x231.jpg"));
         foodItemList.add(new FoodItem("654812","Pasta and Seafood","https://spoonacular.com/recipeImages/654812-312x231.jpg"));
         foodItemList.add(new FoodItem("654857","Pasta On The Border","https://spoonacular.com/recipeImages/654857-312x231.jpg"));
+        foodItemList.add(new FoodItem("654959","Pasta With Tuna","https://spoonacular.com/recipeImages/654959-312x231.jpg"));
+        foodItemList.add(new FoodItem("511728","Pasta Margherita","https://spoonacular.com/recipeImages/511728-312x231.jpg"));
+        foodItemList.add(new FoodItem("654812","Pasta and Seafood","https://spoonacular.com/recipeImages/654812-312x231.jpg"));
+        foodItemList.add(new FoodItem("654857","Pasta On The Border","https://spoonacular.com/recipeImages/654857-312x231.jpg"));
+        foodItemList.add(new FoodItem("654959","Pasta With Tuna","https://spoonacular.com/recipeImages/654959-312x231.jpg"));
+        foodItemList.add(new FoodItem("511728","Pasta Margherita","https://spoonacular.com/recipeImages/511728-312x231.jpg"));
+        foodItemList.add(new FoodItem("654812","Pasta and Seafood","https://spoonacular.com/recipeImages/654812-312x231.jpg"));
+        foodItemList.add(new FoodItem("654857","Pasta On The Border","https://spoonacular.com/recipeImages/654857-312x231.jpg"));
         return foodItemList;
     }
 }

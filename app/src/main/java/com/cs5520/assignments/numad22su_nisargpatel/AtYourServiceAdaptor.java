@@ -36,59 +36,20 @@ public class AtYourServiceAdaptor extends RecyclerView.Adapter<AtYourServiceAdap
     static class AtYourServiceViewHolder extends RecyclerView.ViewHolder {
         private ImageView foodItemIcon;
         private TextView foodItemName;
-
+        private TextView foodItemDescription;
 
         public AtYourServiceViewHolder(@NonNull View itemView) {
             super(itemView);
             foodItemIcon = itemView.findViewById(R.id.food_item_icon);
             foodItemName = itemView.findViewById(R.id.food_item_name);
+            foodItemDescription = itemView.findViewById(R.id.food_item_description);
         }
-
-        public void bind(FoodItem foodItem) {
-
-            try {
-                URL url = new URL(foodItem.getImageURL());
-                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                foodItemIcon.setImageBitmap(bmp);
-            } catch (MalformedURLException e) {
-                //Empty catch
-            } catch (IOException e) {
-                //Empty Catch
-            }
-
-        }
-
-//        private class DownloadImageTask extends concurrent {
-//            ImageView bmImage;
-//
-//            public DownloadImageTask(ImageView bmImage) {
-//                this.bmImage = bmImage;
-//            }
-//
-//            protected Bitmap doInBackground(String... urls) {
-//                String urldisplay = urls[0];
-//                Bitmap mIcon11 = null;
-//                try {
-//                    InputStream in = new java.net.URL(urldisplay).openStream();
-//                    mIcon11 = BitmapFactory.decodeStream(in);
-//                } catch (Exception e) {
-//                    Log.e("Error", e.getMessage());
-//                    e.printStackTrace();
-//                }
-//                return mIcon11;
-//            }
-//
-//            protected void onPostExecute(Bitmap result) {
-//                bmImage.setImageBitmap(result);
-//            }
-//        }
     }
 
     public AtYourServiceAdaptor(Context context, List<FoodItem> foodItems) {
         this.context = context;
         this.foodItems = foodItems;
     }
-
 
     @NonNull
     @Override
@@ -102,24 +63,30 @@ public class AtYourServiceAdaptor extends RecyclerView.Adapter<AtYourServiceAdap
         FoodItem item = foodItems.get(position);
         holder.foodItemName.setText(item.getName());
         holder.foodItemIcon.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.button_custom));
-        new Thread(new DownloadImageThread(holder.foodItemIcon, item.getImageURL())).start();
+        holder.foodItemDescription.setVisibility(item.isExpanded()? View.VISIBLE : View.GONE);
+        if(item.getImageIconBmp() == null) {
+            new Thread(new DownloadImageThread(holder.foodItemIcon, item)).start();
+        } else {
+            holder.foodItemIcon.setImageBitmap(item.getImageIconBmp());
+        }
     }
 
     class DownloadImageThread implements Runnable {
 
         ImageView imageView;
-        String url;
+        FoodItem item;
 
-        public DownloadImageThread(ImageView imageView, String url) {
+        public DownloadImageThread(ImageView imageView, FoodItem item) {
             this.imageView = imageView;
-            this.url = url;
+            this.item = item;
         }
 
         @Override
         public void run() {
             try {
-                InputStream in = new java.net.URL(url).openStream();
+                InputStream in = new java.net.URL(item.getImageURL()).openStream();
                 Bitmap icon = BitmapFactory.decodeStream(in);
+                item.setImageIconBmp(icon);
                 imageIconHandler.post(() -> {
                     imageView.setImageBitmap(icon);
                 });
