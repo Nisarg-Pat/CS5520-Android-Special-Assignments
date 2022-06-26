@@ -7,14 +7,30 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.JsonReader;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.material.slider.RangeSlider;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -29,6 +45,10 @@ public class AtYourService extends AppCompatActivity implements View.OnClickList
     Set<String> foodCategory;
     int minCalorie;
     int maxCalorie;
+
+    private static final String TAG = "AtYourService";
+
+    Handler adapterHander = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,67 +73,130 @@ public class AtYourService extends AppCompatActivity implements View.OnClickList
             public void onStopTrackingTouch(@NonNull RangeSlider slider) {
                 minCalorie = (int)((float)(aysCalorieSlider.getValues().get(0)));
                 maxCalorie = (int)((float)(aysCalorieSlider.getValues().get(1)));
-                Log.d("SLIDER", minCalorie+" "+maxCalorie);
+                Log.d(TAG, minCalorie+" "+maxCalorie);
             }
         });
         minCalorie = (int)((float)(aysCalorieSlider.getValues().get(0)));
         maxCalorie = (int)((float)(aysCalorieSlider.getValues().get(1)));
-        Log.d("SLIDER", minCalorie+" "+maxCalorie);
+        Log.d(TAG, minCalorie+" "+maxCalorie);
 
         foodCategory = new HashSet<>();
 
         aysRecyclerView = findViewById(R.id.ays_recycler_view);
         aysRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        aysAdapter = new AtYourServiceAdaptor(this, generateFoodItems());
+        aysAdapter = new AtYourServiceAdaptor(this, new ArrayList<>());
         aysRecyclerView.setAdapter(aysAdapter);
     }
 
-    public List<FoodItem> generateFoodItems() {
-        //Temporary List
-        List<FoodItem> foodItemList = new ArrayList<>();
-        foodItemList.add(new FoodItem("654959", "Pasta With Tuna", "https://spoonacular.com/recipeImages/654959-312x231.jpg"));
-        foodItemList.add(new FoodItem("511728", "Pasta Margherita", "https://spoonacular.com/recipeImages/511728-312x231.jpg"));
-        foodItemList.add(new FoodItem("654812", "Pasta and Seafood", "https://spoonacular.com/recipeImages/654812-312x231.jpg"));
-        foodItemList.add(new FoodItem("654857", "Pasta On The Border", "https://spoonacular.com/recipeImages/654857-312x231.jpg"));
-        foodItemList.add(new FoodItem("654959", "Pasta With Tuna", "https://spoonacular.com/recipeImages/654959-312x231.jpg"));
-        foodItemList.add(new FoodItem("511728", "Pasta Margherita", "https://spoonacular.com/recipeImages/511728-312x231.jpg"));
-        foodItemList.add(new FoodItem("654812", "Pasta and Seafood", "https://spoonacular.com/recipeImages/654812-312x231.jpg"));
-        foodItemList.add(new FoodItem("654857", "Pasta On The Border", "https://spoonacular.com/recipeImages/654857-312x231.jpg"));
-        foodItemList.add(new FoodItem("654959", "Pasta With Tuna", "https://spoonacular.com/recipeImages/654959-312x231.jpg"));
-        foodItemList.add(new FoodItem("511728", "Pasta Margherita", "https://spoonacular.com/recipeImages/511728-312x231.jpg"));
-        foodItemList.add(new FoodItem("654812", "Pasta and Seafood", "https://spoonacular.com/recipeImages/654812-312x231.jpg"));
-        foodItemList.add(new FoodItem("654857", "Pasta On The Border", "https://spoonacular.com/recipeImages/654857-312x231.jpg"));
-        return foodItemList;
-    }
+//    public List<FoodItem> generateFoodItems() {
+//        //Temporary List
+//        List<FoodItem> foodItemList = new ArrayList<>();
+//        foodItemList.add(new FoodItem("654959", "Pasta With Tuna", "https://spoonacular.com/recipeImages/654959-312x231.jpg"));
+//        foodItemList.add(new FoodItem("511728", "Pasta Margherita", "https://spoonacular.com/recipeImages/511728-312x231.jpg"));
+//        foodItemList.add(new FoodItem("654812", "Pasta and Seafood", "https://spoonacular.com/recipeImages/654812-312x231.jpg"));
+//        foodItemList.add(new FoodItem("654857", "Pasta On The Border", "https://spoonacular.com/recipeImages/654857-312x231.jpg"));
+//        foodItemList.add(new FoodItem("654959", "Pasta With Tuna", "https://spoonacular.com/recipeImages/654959-312x231.jpg"));
+//        foodItemList.add(new FoodItem("511728", "Pasta Margherita", "https://spoonacular.com/recipeImages/511728-312x231.jpg"));
+//        foodItemList.add(new FoodItem("654812", "Pasta and Seafood", "https://spoonacular.com/recipeImages/654812-312x231.jpg"));
+//        foodItemList.add(new FoodItem("654857", "Pasta On The Border", "https://spoonacular.com/recipeImages/654857-312x231.jpg"));
+//        foodItemList.add(new FoodItem("654959", "Pasta With Tuna", "https://spoonacular.com/recipeImages/654959-312x231.jpg"));
+//        foodItemList.add(new FoodItem("511728", "Pasta Margherita", "https://spoonacular.com/recipeImages/511728-312x231.jpg"));
+//        foodItemList.add(new FoodItem("654812", "Pasta and Seafood", "https://spoonacular.com/recipeImages/654812-312x231.jpg"));
+//        foodItemList.add(new FoodItem("654857", "Pasta On The Border", "https://spoonacular.com/recipeImages/654857-312x231.jpg"));
+//        return foodItemList;
+//    }
 
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.ays_clear_btn) {
             aysAdapter.clearFoodItems();
         } else if (view.getId() == R.id.ays_search_btn) {
-
+            clickSearchButton();
         } else if (view.getId() == R.id.checkbox_vegetarian) {
             if (((CheckBox) view).isChecked()) {
                 foodCategory.add(FoodItem.VEGETARIAN);
             } else {
                 foodCategory.remove(FoodItem.VEGETARIAN);
             }
-            Log.d("HASHSET", foodCategory.toString());
+            Log.d(TAG, foodCategory.toString());
         } else if (view.getId() == R.id.checkbox_vegan) {
             if (((CheckBox) view).isChecked()) {
                 foodCategory.add(FoodItem.VEGAN);
             } else {
                 foodCategory.remove(FoodItem.VEGAN);
             }
-            Log.d("HASHSET", foodCategory.toString());
+            Log.d(TAG, foodCategory.toString());
         } else if (view.getId() == R.id.checkbox_gluten_free) {
             if (((CheckBox) view).isChecked()) {
                 foodCategory.add(FoodItem.GLUTEN_FREE);
             } else {
                 foodCategory.remove(FoodItem.GLUTEN_FREE);
             }
-            Log.d("HASHSET", foodCategory.toString());
+            Log.d(TAG, foodCategory.toString());
         }
 
+    }
+
+    private void clickSearchButton() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("https://api.spoonacular.com/recipes/complexSearch?apiKey=").append(Spoonacular.apiKey);
+        String itemName = aysEditText.getText().toString();
+        if(itemName.isEmpty()) {
+            Toast.makeText(this, "Food Item cannot be empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        sb.append("&query=").append(itemName);
+        sb.append("&addRecipeInformation=true");
+        sb.append("&number=").append(10);
+        new Thread(new SpoonacularRunnable(sb.toString())).start();
+    }
+
+    class SpoonacularRunnable implements Runnable {
+
+        private final String urlString;
+
+        public SpoonacularRunnable(String url) {
+            this.urlString = url;
+        }
+
+        @Override
+        public void run() {
+            try {
+                URL url = new URL(urlString);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.connect();
+                InputStream inputStream = conn.getInputStream();
+
+                BufferedReader bR = new BufferedReader(new InputStreamReader(inputStream));
+                String line = "";
+                StringBuilder jsonSB = new StringBuilder();
+                while((line =  bR.readLine()) != null){
+                    jsonSB.append(line);
+                }
+                inputStream.close();
+                Log.d(TAG, jsonSB.toString());
+
+                JSONObject result = new JSONObject(jsonSB.toString());
+                JSONArray results = result.getJSONArray("results");
+                List<FoodItem> foodItemsList = new ArrayList<>();
+                for(int i=0;i<results.length();i++) {
+                    JSONObject item = results.getJSONObject(i);
+                    foodItemsList.add(new FoodItem(item.getInt("id"), item.getString("title"), item.getString("image"), item.getString("summary")));
+                }
+                adapterHander.post(() -> {
+                    aysAdapter.clearFoodItems();
+                    aysAdapter.foodItems = foodItemsList;
+                    aysAdapter.notifyItemRangeInserted(0, aysAdapter.getItemCount());
+                });
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

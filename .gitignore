@@ -14,3 +14,5 @@
 .cxx
 local.properties
 /.idea/
+/app/src/main/java/com/cs5520/assignments/numad22su_nisargpatel/Spoonacular.java
+/app/src/main/assets/temp.json
