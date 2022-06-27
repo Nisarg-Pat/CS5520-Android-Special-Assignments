@@ -12,4 +12,5 @@
     <string name="ays_et_hint">eg. Burger</string>
     <string name="ays_search_str">Search</string>
     <string name="ays_clear_btn_str">Clear</string>
+    <string name="food_item">Food Item:</string>
 </resources>

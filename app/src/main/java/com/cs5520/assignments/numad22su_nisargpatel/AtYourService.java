@@ -50,9 +50,6 @@ public class AtYourService extends AppCompatActivity implements View.OnClickList
 
     private static final String TAG = "AtYourService";
 
-    Handler adapterHander = new Handler();
-    Handler visibilityHander = new Handler();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
