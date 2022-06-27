@@ -20,6 +20,8 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -39,12 +41,14 @@ public class AtYourServiceAdaptor extends RecyclerView.Adapter<AtYourServiceAdap
         private ImageView foodItemIcon;
         private TextView foodItemName;
         private TextView foodItemDescription;
+        private TextView foodItemCalories;
 
         public AtYourServiceViewHolder(@NonNull View itemView) {
             super(itemView);
             foodItemIcon = itemView.findViewById(R.id.food_item_icon);
             foodItemName = itemView.findViewById(R.id.food_item_name);
             foodItemDescription = itemView.findViewById(R.id.food_item_description);
+            foodItemCalories = itemView.findViewById(R.id.food_item_calories);
         }
     }
 
@@ -64,10 +68,11 @@ public class AtYourServiceAdaptor extends RecyclerView.Adapter<AtYourServiceAdap
     public void onBindViewHolder(@NonNull AtYourServiceViewHolder holder, int position) {
         FoodItem item = foodItems.get(position);
         holder.foodItemName.setText(item.getName());
-        holder.foodItemIcon.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.button_custom));
+        holder.foodItemCalories.setText(item.getCalories()+" "+item.getCalorieUnit());
         holder.foodItemDescription.setVisibility(item.isExpanded() ? View.VISIBLE : View.GONE);
         holder.foodItemDescription.setText(Html.fromHtml(item.getDescription(), Html.FROM_HTML_MODE_COMPACT));
         if (item.getImageIconBmp() == null) {
+            holder.foodItemIcon.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.loading));
             new Thread(new DownloadImageThread(holder.foodItemIcon, item)).start();
         } else {
             holder.foodItemIcon.setImageBitmap(item.getImageIconBmp());
@@ -104,7 +109,7 @@ public class AtYourServiceAdaptor extends RecyclerView.Adapter<AtYourServiceAdap
                 });
             } catch (Exception e) {
                 imageIconHandler.post(() -> {
-                    imageView.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.button_custom));
+                    imageView.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.loading));
                 });
             }
         }

@@ -8,31 +8,51 @@
     android:padding="@dimen/padding_mid"
     android:layout_margin="@dimen/margin_mid">
 
-    <ImageView
-        android:id="@+id/food_item_icon"
-        android:layout_width="@dimen/at_your_service_image_icon_dimen"
-        android:layout_height="@dimen/at_your_service_image_icon_dimen"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/food_item_constraint_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/button_custom" />
+        app:layout_constraintEnd_toEndOf="parent">
+        <ImageView
+            android:id="@+id/food_item_icon"
+            android:layout_width="@dimen/at_your_service_image_icon_dimen"
+            android:layout_height="@dimen/at_your_service_image_icon_dimen"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/loading" />
 
-    <TextView
-        android:id="@+id/food_item_name"
-        android:layout_width="@dimen/fit_constraint"
-        android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/margin_lg"
-        android:layout_marginTop="@dimen/margin_mid"
-        android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@id/food_item_icon"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:text="Burger" />
+        <TextView
+            android:id="@+id/food_item_name"
+            android:layout_width="@dimen/fit_constraint"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/margin_lg"
+            android:layout_marginTop="@dimen/margin_mid"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@id/food_item_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Burger fjwhiuefhehfoiwefhoweifwoefhweoihfwofwlekfjwehfiwoe" />
+
+        <TextView
+            android:id="@+id/food_item_calories"
+            android:layout_width="@dimen/fit_constraint"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/margin_lg"
+            android:layout_marginTop="@dimen/margin_mid"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@id/food_item_icon"
+            app:layout_constraintTop_toBottomOf="@id/food_item_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="20 kcal" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/food_item_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/food_item_icon"
+        app:layout_constraintTop_toBottomOf="@id/food_item_constraint_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="Description" />

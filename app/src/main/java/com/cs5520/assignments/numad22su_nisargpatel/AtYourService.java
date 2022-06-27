@@ -88,24 +88,6 @@ public class AtYourService extends AppCompatActivity implements View.OnClickList
         aysRecyclerView.setAdapter(aysAdapter);
     }
 
-//    public List<FoodItem> generateFoodItems() {
-//        //Temporary List
-//        List<FoodItem> foodItemList = new ArrayList<>();
-//        foodItemList.add(new FoodItem("654959", "Pasta With Tuna", "https://spoonacular.com/recipeImages/654959-312x231.jpg"));
-//        foodItemList.add(new FoodItem("511728", "Pasta Margherita", "https://spoonacular.com/recipeImages/511728-312x231.jpg"));
-//        foodItemList.add(new FoodItem("654812", "Pasta and Seafood", "https://spoonacular.com/recipeImages/654812-312x231.jpg"));
-//        foodItemList.add(new FoodItem("654857", "Pasta On The Border", "https://spoonacular.com/recipeImages/654857-312x231.jpg"));
-//        foodItemList.add(new FoodItem("654959", "Pasta With Tuna", "https://spoonacular.com/recipeImages/654959-312x231.jpg"));
-//        foodItemList.add(new FoodItem("511728", "Pasta Margherita", "https://spoonacular.com/recipeImages/511728-312x231.jpg"));
-//        foodItemList.add(new FoodItem("654812", "Pasta and Seafood", "https://spoonacular.com/recipeImages/654812-312x231.jpg"));
-//        foodItemList.add(new FoodItem("654857", "Pasta On The Border", "https://spoonacular.com/recipeImages/654857-312x231.jpg"));
-//        foodItemList.add(new FoodItem("654959", "Pasta With Tuna", "https://spoonacular.com/recipeImages/654959-312x231.jpg"));
-//        foodItemList.add(new FoodItem("511728", "Pasta Margherita", "https://spoonacular.com/recipeImages/511728-312x231.jpg"));
-//        foodItemList.add(new FoodItem("654812", "Pasta and Seafood", "https://spoonacular.com/recipeImages/654812-312x231.jpg"));
-//        foodItemList.add(new FoodItem("654857", "Pasta On The Border", "https://spoonacular.com/recipeImages/654857-312x231.jpg"));
-//        return foodItemList;
-//    }
-
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.ays_clear_btn) {
@@ -147,17 +129,17 @@ public class AtYourService extends AppCompatActivity implements View.OnClickList
         sb.append("https://api.spoonacular.com/recipes/complexSearch?apiKey=").append(Spoonacular.apiKey);
         sb.append("&query=").append(itemName);
         sb.append("&addRecipeInformation=true");
-        sb.append("&number=").append(10);
+        sb.append("&number=").append(20);
         sb.append("&minCalories=").append(minCalorie);
         sb.append("&maxCalories=").append(maxCalorie);
 
-        StringBuilder foodCategoryBuilder = new StringBuilder();
-        for(String category: foodCategory) {
-            foodCategoryBuilder.append(category).append(',');
-        }
-        foodCategoryBuilder.deleteCharAt(foodCategoryBuilder.length()-1);
-        String categoryString = foodCategoryBuilder.toString();
-        if(!categoryString.isEmpty()) {
+        if(!foodCategory.isEmpty()) {
+            StringBuilder foodCategoryBuilder = new StringBuilder("");
+            for(String category: foodCategory) {
+                foodCategoryBuilder.append(category).append(',');
+            }
+            foodCategoryBuilder.deleteCharAt(foodCategoryBuilder.length()-1);
+            String categoryString = foodCategoryBuilder.toString();
             sb.append("&diet=").append(categoryString);
         }
         Log.d(TAG, sb.toString());
@@ -195,7 +177,8 @@ public class AtYourService extends AppCompatActivity implements View.OnClickList
                 List<FoodItem> foodItemsList = new ArrayList<>();
                 for(int i=0;i<results.length();i++) {
                     JSONObject item = results.getJSONObject(i);
-                    foodItemsList.add(new FoodItem(item.getInt("id"), item.getString("title"), item.getString("image"), item.getString("summary")));
+                    JSONObject calory = item.getJSONObject("nutrition").getJSONArray("nutrients").getJSONObject(0);
+                    foodItemsList.add(new FoodItem(item.getInt("id"), item.getString("title"), item.getString("image"), item.getString("summary"), calory.getDouble("amount"), calory.getString("unit")));
                 }
                 adapterHander.post(() -> {
                     aysAdapter.clearFoodItems();
