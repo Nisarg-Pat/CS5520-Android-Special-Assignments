@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -41,10 +42,7 @@ import java.util.Set;
 
 public class AtYourService extends AppCompatActivity implements View.OnClickListener {
     EditText aysEditText;
-    RecyclerView aysRecyclerView;
-    ProgressBar aysProgresssBar;
-    AtYourServiceAdaptor aysAdapter;
-    Button aysSearch, aysClear;
+    Button aysSearch;
     RangeSlider aysCalorieSlider;
     Set<String> foodCategory;
     int minCalorie;
@@ -62,8 +60,6 @@ public class AtYourService extends AppCompatActivity implements View.OnClickList
         aysEditText = findViewById(R.id.ays_query_et);
         aysSearch = findViewById(R.id.ays_search_btn);
         aysSearch.setOnClickListener(this);
-        aysClear = findViewById(R.id.ays_clear_btn);
-        aysClear.setOnClickListener(this);
 
         aysCalorieSlider = findViewById(R.id.calorie_slider);
         aysCalorieSlider.addOnSliderTouchListener(new RangeSlider.OnSliderTouchListener() {
@@ -87,19 +83,12 @@ public class AtYourService extends AppCompatActivity implements View.OnClickList
 
         foodCategory = new HashSet<>();
 
-        aysRecyclerView = findViewById(R.id.ays_recycler_view);
-        aysRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        aysAdapter = new AtYourServiceAdaptor(this, new ArrayList<>());
-        aysRecyclerView.setAdapter(aysAdapter);
 
-        aysProgresssBar = findViewById(R.id.ays_progress_bar);
     }
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.ays_clear_btn) {
-            aysAdapter.clearFoodItems();
-        } else if (view.getId() == R.id.ays_search_btn) {
+        if (view.getId() == R.id.ays_search_btn) {
             clickSearchButton();
         } else if (view.getId() == R.id.checkbox_vegetarian) {
             if (((CheckBox) view).isChecked()) {
@@ -136,8 +125,6 @@ public class AtYourService extends AppCompatActivity implements View.OnClickList
             Toast.makeText(this, "Food Item cannot be empty", Toast.LENGTH_SHORT).show();
             return;
         }
-        aysRecyclerView.setVisibility(View.GONE);
-        aysProgresssBar.setVisibility(View.VISIBLE);
         StringBuilder sb = new StringBuilder();
         sb.append("https://api.spoonacular.com/recipes/complexSearch?apiKey=").append(Spoonacular.apiKey);
         sb.append("&query=").append(itemName);
@@ -156,66 +143,13 @@ public class AtYourService extends AppCompatActivity implements View.OnClickList
             sb.append("&diet=").append(categoryString);
         }
         Log.d(TAG, sb.toString());
-        new Thread(new SpoonacularRunnable(sb.toString())).start();
+        Intent intent = new Intent(this, FoodItemActivity.class);
+        intent.putExtra("url", sb.toString());
+        startActivity(intent);
     }
 
     public boolean isNetworkConnected() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         return connectivityManager.getActiveNetworkInfo() != null;
-    }
-
-    class SpoonacularRunnable implements Runnable {
-
-        private final String urlString;
-
-        public SpoonacularRunnable(String url) {
-            this.urlString = url;
-        }
-
-        @Override
-        public void run() {
-            try {
-                URL url = new URL(urlString);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("GET");
-                conn.connect();
-                InputStream inputStream = conn.getInputStream();
-
-                BufferedReader bR = new BufferedReader(new InputStreamReader(inputStream));
-                String line = "";
-                StringBuilder jsonSB = new StringBuilder();
-                while ((line = bR.readLine()) != null) {
-                    jsonSB.append(line);
-                }
-                inputStream.close();
-                Log.d(TAG, jsonSB.toString());
-
-                JSONObject result = new JSONObject(jsonSB.toString());
-                JSONArray results = result.getJSONArray("results");
-                List<FoodItem> foodItemsList = new ArrayList<>();
-                for (int i = 0; i < results.length(); i++) {
-                    JSONObject item = results.getJSONObject(i);
-                    JSONObject calory = item.getJSONObject("nutrition").getJSONArray("nutrients").getJSONObject(0);
-                    foodItemsList.add(new FoodItem(item.getInt("id"), item.getString("title"), item.getString("image"), item.getString("summary"), calory.getDouble("amount"), calory.getString("unit")));
-                }
-                adapterHander.post(() -> {
-                    aysAdapter.clearFoodItems();
-                    aysAdapter.foodItems = foodItemsList;
-                    aysAdapter.notifyItemRangeInserted(0, aysAdapter.getItemCount());
-                });
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            visibilityHander.post(() -> {
-                aysRecyclerView.setVisibility(View.VISIBLE);
-                aysProgresssBar.setVisibility(View.GONE);
-            });
-
-        }
     }
 }
