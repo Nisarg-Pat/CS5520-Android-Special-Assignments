@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.JsonReader;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.material.slider.RangeSlider;
@@ -39,6 +42,7 @@ import java.util.Set;
 public class AtYourService extends AppCompatActivity implements View.OnClickListener {
     EditText aysEditText;
     RecyclerView aysRecyclerView;
+    ProgressBar aysProgresssBar;
     AtYourServiceAdaptor aysAdapter;
     Button aysSearch, aysClear;
     RangeSlider aysCalorieSlider;
@@ -49,6 +53,7 @@ public class AtYourService extends AppCompatActivity implements View.OnClickList
     private static final String TAG = "AtYourService";
 
     Handler adapterHander = new Handler();
+    Handler visibilityHander = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,14 +76,14 @@ public class AtYourService extends AppCompatActivity implements View.OnClickList
             @SuppressLint("RestrictedApi")
             @Override
             public void onStopTrackingTouch(@NonNull RangeSlider slider) {
-                minCalorie = (int)((float)(aysCalorieSlider.getValues().get(0)));
-                maxCalorie = (int)((float)(aysCalorieSlider.getValues().get(1)));
-                Log.d(TAG, minCalorie+" "+maxCalorie);
+                minCalorie = (int) ((float) (aysCalorieSlider.getValues().get(0)));
+                maxCalorie = (int) ((float) (aysCalorieSlider.getValues().get(1)));
+                Log.d(TAG, minCalorie + " " + maxCalorie);
             }
         });
-        minCalorie = (int)((float)(aysCalorieSlider.getValues().get(0)));
-        maxCalorie = (int)((float)(aysCalorieSlider.getValues().get(1)));
-        Log.d(TAG, minCalorie+" "+maxCalorie);
+        minCalorie = (int) ((float) (aysCalorieSlider.getValues().get(0)));
+        maxCalorie = (int) ((float) (aysCalorieSlider.getValues().get(1)));
+        Log.d(TAG, minCalorie + " " + maxCalorie);
 
         foodCategory = new HashSet<>();
 
@@ -86,6 +91,8 @@ public class AtYourService extends AppCompatActivity implements View.OnClickList
         aysRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         aysAdapter = new AtYourServiceAdaptor(this, new ArrayList<>());
         aysRecyclerView.setAdapter(aysAdapter);
+
+        aysProgresssBar = findViewById(R.id.ays_progress_bar);
     }
 
     @Override
@@ -120,11 +127,17 @@ public class AtYourService extends AppCompatActivity implements View.OnClickList
     }
 
     private void clickSearchButton() {
+        if(!isNetworkConnected()) {
+            Toast.makeText(this, "No internet connection", Toast.LENGTH_SHORT).show();
+            return;
+        }
         String itemName = aysEditText.getText().toString();
-        if(itemName.isEmpty()) {
+        if (itemName.isEmpty()) {
             Toast.makeText(this, "Food Item cannot be empty", Toast.LENGTH_SHORT).show();
             return;
         }
+        aysRecyclerView.setVisibility(View.GONE);
+        aysProgresssBar.setVisibility(View.VISIBLE);
         StringBuilder sb = new StringBuilder();
         sb.append("https://api.spoonacular.com/recipes/complexSearch?apiKey=").append(Spoonacular.apiKey);
         sb.append("&query=").append(itemName);
@@ -133,17 +146,22 @@ public class AtYourService extends AppCompatActivity implements View.OnClickList
         sb.append("&minCalories=").append(minCalorie);
         sb.append("&maxCalories=").append(maxCalorie);
 
-        if(!foodCategory.isEmpty()) {
+        if (!foodCategory.isEmpty()) {
             StringBuilder foodCategoryBuilder = new StringBuilder("");
-            for(String category: foodCategory) {
+            for (String category : foodCategory) {
                 foodCategoryBuilder.append(category).append(',');
             }
-            foodCategoryBuilder.deleteCharAt(foodCategoryBuilder.length()-1);
+            foodCategoryBuilder.deleteCharAt(foodCategoryBuilder.length() - 1);
             String categoryString = foodCategoryBuilder.toString();
             sb.append("&diet=").append(categoryString);
         }
         Log.d(TAG, sb.toString());
         new Thread(new SpoonacularRunnable(sb.toString())).start();
+    }
+
+    public boolean isNetworkConnected() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return connectivityManager.getActiveNetworkInfo() != null;
     }
 
     class SpoonacularRunnable implements Runnable {
@@ -166,7 +184,7 @@ public class AtYourService extends AppCompatActivity implements View.OnClickList
                 BufferedReader bR = new BufferedReader(new InputStreamReader(inputStream));
                 String line = "";
                 StringBuilder jsonSB = new StringBuilder();
-                while((line =  bR.readLine()) != null){
+                while ((line = bR.readLine()) != null) {
                     jsonSB.append(line);
                 }
                 inputStream.close();
@@ -175,7 +193,7 @@ public class AtYourService extends AppCompatActivity implements View.OnClickList
                 JSONObject result = new JSONObject(jsonSB.toString());
                 JSONArray results = result.getJSONArray("results");
                 List<FoodItem> foodItemsList = new ArrayList<>();
-                for(int i=0;i<results.length();i++) {
+                for (int i = 0; i < results.length(); i++) {
                     JSONObject item = results.getJSONObject(i);
                     JSONObject calory = item.getJSONObject("nutrition").getJSONArray("nutrients").getJSONObject(0);
                     foodItemsList.add(new FoodItem(item.getInt("id"), item.getString("title"), item.getString("image"), item.getString("summary"), calory.getDouble("amount"), calory.getString("unit")));
@@ -193,6 +211,11 @@ public class AtYourService extends AppCompatActivity implements View.OnClickList
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            visibilityHander.post(() -> {
+                aysRecyclerView.setVisibility(View.VISIBLE);
+                aysProgresssBar.setVisibility(View.GONE);
+            });
+
         }
     }
 }
