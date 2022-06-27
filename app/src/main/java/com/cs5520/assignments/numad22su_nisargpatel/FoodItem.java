@@ -12,7 +12,7 @@ public class FoodItem {
 
     public static final String VEGETARIAN = "vegetarian";
     public static final String VEGAN = "vegan";
-    public static final String GLUTEN_FREE = "gluten_free";
+    public static final String GLUTEN_FREE = "glutenFree";
 
     public FoodItem(int id, String name, String imageURL, String description) {
         this.id = String.valueOf(id);

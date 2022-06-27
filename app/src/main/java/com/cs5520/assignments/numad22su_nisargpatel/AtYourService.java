@@ -138,16 +138,29 @@ public class AtYourService extends AppCompatActivity implements View.OnClickList
     }
 
     private void clickSearchButton() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("https://api.spoonacular.com/recipes/complexSearch?apiKey=").append(Spoonacular.apiKey);
         String itemName = aysEditText.getText().toString();
         if(itemName.isEmpty()) {
             Toast.makeText(this, "Food Item cannot be empty", Toast.LENGTH_SHORT).show();
             return;
         }
+        StringBuilder sb = new StringBuilder();
+        sb.append("https://api.spoonacular.com/recipes/complexSearch?apiKey=").append(Spoonacular.apiKey);
         sb.append("&query=").append(itemName);
         sb.append("&addRecipeInformation=true");
         sb.append("&number=").append(10);
+        sb.append("&minCalories=").append(minCalorie);
+        sb.append("&maxCalories=").append(maxCalorie);
+
+        StringBuilder foodCategoryBuilder = new StringBuilder();
+        for(String category: foodCategory) {
+            foodCategoryBuilder.append(category).append(',');
+        }
+        foodCategoryBuilder.deleteCharAt(foodCategoryBuilder.length()-1);
+        String categoryString = foodCategoryBuilder.toString();
+        if(!categoryString.isEmpty()) {
+            sb.append("&diet=").append(categoryString);
+        }
+        Log.d(TAG, sb.toString());
         new Thread(new SpoonacularRunnable(sb.toString())).start();
     }
 
